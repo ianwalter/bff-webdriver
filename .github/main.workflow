@@ -19,6 +19,6 @@ action "Test" {
   uses = "docker://node:11-alpine"
   needs = ["Install"]
   runs = "yarn"
-  args = "test"
+  args = "test --webdriver.hostname hub-cloud.browserstack.com"
   secrets = ["BROWSERSTACK_ACCESS_KEY"]
 }
