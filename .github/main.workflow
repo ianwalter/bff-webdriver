@@ -20,5 +20,8 @@ action "Test" {
   needs = ["Install"]
   runs = "yarn"
   args = "test --webdriver.hostname hub-cloud.browserstack.com"
-  secrets = ["BROWSERSTACK_ACCESS_KEY"]
+  secrets = [
+    "BROWSERSTACK_ACCESS_KEY",
+    "BROWSERSTACK_USERNAME",
+  ]
 }
