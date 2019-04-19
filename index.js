@@ -1,26 +1,32 @@
 const { Print } = require('@ianwalter/print')
 
-const hasBslKey = cap => cap.hasOwnProperty('browserstack.local')
+const hasBsl = cap => cap['bstack:options'] && cap['bstack:options'].local
 
 function shouldStartBsl (capabilities) {
   if (Array.isArray(capabilities)) {
-    return capabilities.some(hasBslKey)
+    return capabilities.some(hasBsl)
   } else {
-    return hasBslKey(capabilities)
+    return hasBsl(capabilities)
   }
 }
 function toBrowserTest (test) {
   return capability => {
+    const browserstack = capability['bstack:options']
     //
-    capability.name = test.name
+    if (browserstack) {
+      browserstack.name = test.name
+    }
 
     //
     let name = `${test.name} in ${capability.browserName}`
     if (capability.browserVersion) {
       name += ` ${capability.browserVersion}`
     }
-    if (capability.platformName) {
-      name += ` on ${capability.platformName}`
+    if (browserstack.os) {
+      name += ` on ${browserstack.os}`
+    }
+    if (browserstack.osVersion) {
+      name += ` ${browserstack.osVersion}`
     }
     return { ...test, name, capability }
   }
@@ -29,31 +35,36 @@ function toBrowserTests (capabilties) {
   return (acc, test) => acc.concat(capabilties.map(toBrowserTest(test)))
 }
 
+let seleniumStandalone
+let browserstackLocal
+
 module.exports = async function bffWebdriver (hook, context) {
   const print = new Print({ level: context.logLevel })
-  print.debug(`Hook ${hook}:`, context)
+  print.debug(`bff-webdriver ${hook} hook`)
 
-  const multipleCapabilities = Array.isArray(context.webdriver.capabilities)
-  if (hook === 'registration' && multipleCapabilities) {
+  if (hook === 'registration') {
+    const capabilities = Array.isArray(context.webdriver.capabilities)
+      ? context.webdriver.capabilities
+      : [context.webdriver.capabilities]
     const registrationContext = context.registrationContext
     registrationContext.tests = registrationContext.tests.reduce(
-      toBrowserTests(context.webdriver.capabilities),
+      toBrowserTests(capabilities),
       []
     )
   } else if (hook === 'before') {
     if (process.env.SELENIUM_STANDALONE) {
       print.debug('Starting Selenium Standalone')
       return new Promise((resolve, reject) => {
-        const seleniumStandalone = require('selenium-standalone')
+        const standalone = require('selenium-standalone')
         const options = { spawnOptions: { stdio: 'inherit' } }
-        seleniumStandalone.start(options, (err, child) => {
+        standalone.start(options, (err, child) => {
           if (err) {
             if (child) {
               child.kill()
             }
             reject(err)
           } else {
-            context.seleniumStandalone = child
+            seleniumStandalone = child
             resolve()
           }
         })
@@ -61,7 +72,7 @@ module.exports = async function bffWebdriver (hook, context) {
     } else if (shouldStartBsl(context.webdriver.capabilities)) {
       print.debug('Starting BrowserStadk Local')
       const bsl = require('@ianwalter/bsl')
-      context.browserstackLocal = await bsl.start()
+      browserstackLocal = await bsl.start()
     }
   } else if (hook === 'beforeEach') {
     print.debug('Creating WebdriverIO browser instance')
@@ -70,20 +81,21 @@ module.exports = async function bffWebdriver (hook, context) {
     const { remote } = require('webdriverio')
     context.testContext.browser = await remote({
       ...context.webdriver,
-      capabilities: context.testContext.test.capability
+      logLevel: context.logLevel,
+      capabilities: context.testContext.capability
     })
-  } else if (hook === 'adterEach') {
+  } else if (hook === 'afterEach') {
     print.debug('Terminating WebdriverIO browser instance')
 
     // Tell Selenium to delete the browser session once the test is over.
     await context.testContext.browser.deleteSession()
   } else if (hook === 'after') {
-    if (context.seleniumStandalone) {
+    if (seleniumStandalone) {
       print.debug('Stopping Selenium Standalone')
-      context.seleniumStandalone.stop()
-    } else if (context.browserstackLocal) {
+      seleniumStandalone.kill()
+    } else if (browserstackLocal) {
       print.debug('Stopping BrowserStack Local')
-      context.browserstackLocal.stop()
+      browserstackLocal.stop()
     }
   }
 }

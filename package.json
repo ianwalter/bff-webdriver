@@ -3,7 +3,8 @@
   "license": "SEE LICENSE IN LICENSE",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint index.js"
+    "lint": "eslint index.js",
+    "postinstall": "node postinstall.js"
   },
   "dependencies": {
     "@ianwalter/bsl": "^1.0.1",
