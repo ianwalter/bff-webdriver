@@ -1,6 +1,7 @@
+require('dotenv').config()
 const { Print } = require('@ianwalter/print')
 
-const hasBsl = cap => cap['bstack:options'] && cap['bstack:options'].local
+const hasBsl = cap => cap && cap['bstack:options'] && cap['bstack:options'].local
 
 function shouldStartBsl (capabilities) {
   if (Array.isArray(capabilities)) {

@@ -119,12 +119,12 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@ianwalter/bff@^2.10.0":
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/@ianwalter/bff/-/bff-2.10.0.tgz#ac57ff0dbef86a5ff8b61a6feb82f7f4bd8808b3"
-  integrity sha512-nPMbXthsDMBUwOzIxbsUmP8GC8vr3Ech3Bx9OeVGYkvBRUay7MiNZAIgbMOPjXYFkq/RVFmhE9lx9f0rVOCsVw==
+"@ianwalter/bff@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@ianwalter/bff/-/bff-3.1.0.tgz#71e7983d8aa4a9489ccaee12886375284c804a83"
+  integrity sha512-HoRD06Z4UTYJ6H62SwjA4OwrxFckpkzRzzFCtXM7ZnnqdQBfpchwL1c+JICE7m3E9hgipDKf2j9cik9JmCBa3w==
   dependencies:
-    "@ianwalter/cli" "^1.0.0"
+    "@ianwalter/cli" "^1.1.0"
     "@ianwalter/print" "^2.3.0"
     common-tags "^1.8.0"
     expect "^24.7.1"
@@ -134,22 +134,24 @@
     p-timeout "^3.1.0"
     workerpool "^3.1.2"
 
-"@ianwalter/bsl@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@ianwalter/bsl/-/bsl-1.0.1.tgz#aa31783b5d0effbeb235cf9f8b0e47b1c94001a5"
-  integrity sha512-Hv8jYWb0U/6U2YfalpZulq4l4T68URrOBdlEctMyX/7HDzw/oZFO8U7aVDtrmbbiLTPI6U9FtZ97rHkf5MfYJw==
+"@ianwalter/bsl@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@ianwalter/bsl/-/bsl-1.1.1.tgz#ce2fb52b5a672712a80a3b39ef2316a3f87b5d31"
+  integrity sha512-d+qW7l/SFsQEr+M1B21VIvUg3w8tTYVLDI768i4XyB2Xse14zpY7/wqcGQSalPgCbj8TKWY/c5Ayqm1A24AOTg==
   dependencies:
     browserstack-local "^1.3.7"
     conf "^4.0.0"
+    dotenv "^7.0.0"
     fkill "^6.1.0"
     meow "^5.0.0"
     signale "^1.4.0"
 
-"@ianwalter/cli@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@ianwalter/cli/-/cli-1.0.0.tgz#73d803468c11bde5afac4b5eedfc4ac33ae36f12"
-  integrity sha512-MDcYFW9Ksb2jHfQ/v2QJRsEp/5Raz9FxUx2GLGjLWuqfk1GwWOGxJ9As7tJAuE9stVbZa1o/Gi753QWb8PZzQw==
+"@ianwalter/cli@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@ianwalter/cli/-/cli-1.1.0.tgz#e1ff4891f66ce4434334202324db2a741737ab0c"
+  integrity sha512-5TCm24OMevpcfP4+q7w7ckI7lpfMzq/uI17hoq6THuLUmL7tmjlpW4YM+uEURBAQEzT08RMtMMyIBY4ZRZHCnQ==
   dependencies:
+    dot-prop "^5.0.0"
     getopts "^2.2.4"
     pkg-conf "^3.1.0"
     yargs "^13.2.2"
@@ -1173,6 +1175,11 @@ dot-prop@^5.0.0:
   integrity sha512-RTmaF2jx3nOBO2GvtFqjnDLycjFUMqt+2pwRx7JVYa81lDauoj9aNkyrJI2ikR58FbBIchiIlRiGG+muLJ4oHQ==
   dependencies:
     is-obj "^1.0.0"
+
+dotenv@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-7.0.0.tgz#a2be3cd52736673206e8a85fb5210eea29628e7c"
+  integrity sha512-M3NhsLbV1i6HuGzBUH8vXrtxOk+tWmzWKDMbAVSUp3Zsjm7ywFeuwrUXhmhQyRK1q5B5GGy7hcXPbj3bnfZg2g==
 
 duplexer3@^0.1.4:
   version "0.1.4"

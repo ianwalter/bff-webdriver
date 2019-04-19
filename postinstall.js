@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 async function install () {
   const selenium = require('selenium-standalone')
   try {

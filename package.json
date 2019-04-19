@@ -8,6 +8,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js",
+    "test": "bff",
     "postinstall": "node postinstall.js"
   },
   "repository": {
@@ -28,15 +29,43 @@
     "browserstack"
   ],
   "dependencies": {
-    "@ianwalter/bsl": "^1.0.1",
+    "@ianwalter/bsl": "^1.1.1",
     "@ianwalter/print": "^2.3.0",
+    "dotenv": "^7.0.0",
     "selenium-standalone": "^6.16.0",
     "webdriverio": "^5.7.14"
   },
   "devDependencies": {
-    "@ianwalter/bff": "^2.10.0",
+    "@ianwalter/bff": "^3.1.0",
     "@ianwalter/eslint-config": "^1.1.2",
     "np": "^5.0.0"
+  },
+  "bff": {
+    "before": [
+      "../../../"
+    ],
+    "registration": [
+      "../../../"
+    ],
+    "beforeEach": [
+      "../../../"
+    ],
+    "afterEach": [
+      "../../../"
+    ],
+    "after": [
+      "../../../"
+    ],
+    "webdriver": {
+      "capabilities": {
+        "browserName": "firefox",
+        "bstack:options": {
+          "local": true,
+          "projectName": "bff-webdriver",
+          "timezone": "EST"
+        }
+      }
+    }
   },
   "eslintConfig": {
     "root": true,
