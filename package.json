@@ -1,11 +1,32 @@
 {
   "name": "@ianwalter/bff-webdriver",
+  "description": "A bff plugin to enable WebDriver-based testing",
+  "version": "1.0.0",
+  "author": "Ian Walter <public@iankwalter.com> (https://iankwalter.com)",
+  "homepage": "https://github.com/ianwalter/bff-webdriver#readme",
   "license": "SEE LICENSE IN LICENSE",
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js",
     "postinstall": "node postinstall.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ianwalter/bff-webdriver.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ianwalter/bff-webdriver/issues"
+  },
+  "keywords": [
+    "bff",
+    "webdriver",
+    "selenium",
+    "test",
+    "testing",
+    "automated",
+    "standalone",
+    "browserstack"
+  ],
   "dependencies": {
     "@ianwalter/bsl": "^1.0.1",
     "@ianwalter/print": "^2.3.0",
