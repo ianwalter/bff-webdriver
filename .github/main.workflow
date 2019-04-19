@@ -21,7 +21,7 @@ action "Test" {
   runs = "yarn"
   args = "test --webdriver.hostname hub-cloud.browserstack.com --webdriver.user $BROWSERSTACK_USERNAME --webdriver.key $BROWSERSTACK_ACCESS_KEY"
   secrets = [
-    "BROWSERSTACK_ACCESS_KEY",
     "BROWSERSTACK_USERNAME",
+    "BROWSERSTACK_ACCESS_KEY",
   ]
 }
