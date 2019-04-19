@@ -1,7 +1,6 @@
-require('dotenv').config()
 const { Print } = require('@ianwalter/print')
 
-const hasBsl = cap => cap['bstack:options'] && cap['bstack:options'].local
+const hasBsl = cap => cap['browserstack.local']
 
 function shouldStartBsl (capabilities) {
   if (Array.isArray(capabilities)) {
@@ -53,7 +52,7 @@ module.exports = async function bffWebdriver (hook, context) {
       []
     )
   } else if (hook === 'before') {
-    if (process.env.SELENIUM_STANDALONE) {
+    if (context.webdriver.standalone) {
       print.debug('Starting Selenium Standalone')
       return new Promise((resolve, reject) => {
         const standalone = require('selenium-standalone')
@@ -71,9 +70,20 @@ module.exports = async function bffWebdriver (hook, context) {
         })
       })
     } else if (shouldStartBsl(context.webdriver.capabilities)) {
-      print.debug('Starting BrowserStadk Local')
-      const bsl = require('@ianwalter/bsl')
-      browserstackLocal = await bsl.start()
+      print.debug('Starting BrowserStack Local')
+      const { Local } = require('browserstack-local')
+      browserstackLocal = new Local()
+      return new Promise((resolve, reject) => {
+        const force = true
+        const verbose = context.logLevel === 'debug'
+        browserstackLocal.start({ force, forceLocal: force, verbose }, err => {
+          if (err) {
+            reject(err)
+          } else {
+            resolve()
+          }
+        })
+      })
     }
   } else if (hook === 'beforeEach') {
     print.debug('Creating WebdriverIO browser instance')
