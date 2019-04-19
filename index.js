@@ -1,7 +1,7 @@
 require('dotenv').config()
 const { Print } = require('@ianwalter/print')
 
-const hasBsl = cap => cap && cap['bstack:options'] && cap['bstack:options'].local
+const hasBsl = cap => cap['bstack:options'] && cap['bstack:options'].local
 
 function shouldStartBsl (capabilities) {
   if (Array.isArray(capabilities)) {
@@ -32,8 +32,8 @@ function toBrowserTest (test) {
     return { ...test, name, capability }
   }
 }
-function toBrowserTests (capabilties) {
-  return (acc, test) => acc.concat(capabilties.map(toBrowserTest(test)))
+function toBrowserTests (capabilities) {
+  return (acc, test) => acc.concat(capabilities.map(toBrowserTest(test)))
 }
 
 let seleniumStandalone
