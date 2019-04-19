@@ -1,6 +1,7 @@
 {
   "name": "@ianwalter/bff-webdriver",
   "license": "SEE LICENSE IN LICENSE",
+  "main": "index.js",
   "scripts": {
     "lint": "eslint index.js"
   },
