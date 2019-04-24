@@ -92,7 +92,7 @@ module.exports = async function bffWebdriver (hook, context) {
     const { remote } = require('webdriverio')
     context.testContext.browser = await remote({
       ...context.webdriver,
-      logLevel: context.logLevel,
+      logLevel: context.webdriver.logLevel || context.logLevel,
       capabilities: context.testContext.capability
     })
   } else if (hook === 'afterEach') {

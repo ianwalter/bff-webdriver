@@ -28,6 +28,10 @@
     "standalone",
     "browserstack"
   ],
+  "files": [
+    "index.js",
+    "postinstall.js"
+  ],
   "dependencies": {
     "@ianwalter/print": "^2.3.0",
     "browserstack-local": "^1.3.7",
