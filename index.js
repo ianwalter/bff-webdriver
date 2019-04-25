@@ -1,4 +1,3 @@
-const { Print } = require('@ianwalter/print')
 
 const hasBsl = cap => cap['browserstack.local']
 
@@ -38,20 +37,11 @@ function toBrowserTests (capabilities) {
 let seleniumStandalone
 let browserstackLocal
 
-module.exports = async function bffWebdriver (hook, context) {
-  const print = new Print({ level: context.logLevel })
-  print.debug(`bff-webdriver ${hook} hook`)
+module.exports = {
+  before (context) {
+    const { Print } = require('@ianwalter/print')
+    const print = new Print({ level: context.logLevel })
 
-  if (hook === 'registration') {
-    const capabilities = Array.isArray(context.webdriver.capabilities)
-      ? context.webdriver.capabilities
-      : [context.webdriver.capabilities]
-    const registrationContext = context.registrationContext
-    registrationContext.tests = registrationContext.tests.reduce(
-      toBrowserTests(capabilities),
-      []
-    )
-  } else if (hook === 'before') {
     if (context.webdriver.standalone) {
       print.debug('Starting Selenium Standalone')
       return new Promise((resolve, reject) => {
@@ -71,9 +61,9 @@ module.exports = async function bffWebdriver (hook, context) {
       })
     } else if (shouldStartBsl(context.webdriver.capabilities)) {
       print.debug('Starting BrowserStack Local')
-      const { Local } = require('browserstack-local')
-      browserstackLocal = new Local()
       return new Promise((resolve, reject) => {
+        const { Local } = require('browserstack-local')
+        browserstackLocal = new Local()
         const force = true
         const verbose = context.logLevel === 'debug'
         browserstackLocal.start({ force, forceLocal: force, verbose }, err => {
@@ -85,7 +75,20 @@ module.exports = async function bffWebdriver (hook, context) {
         })
       })
     }
-  } else if (hook === 'beforeEach') {
+  },
+  registration (context) {
+    const capabilities = Array.isArray(context.webdriver.capabilities)
+      ? context.webdriver.capabilities
+      : [context.webdriver.capabilities]
+    const registrationContext = context.registrationContext
+    registrationContext.tests = registrationContext.tests.reduce(
+      toBrowserTests(capabilities),
+      []
+    )
+  },
+  async beforeEach (context) {
+    const { Print } = require('@ianwalter/print')
+    const print = new Print({ level: context.logLevel })
     print.debug('Creating WebdriverIO browser instance')
 
     // Set up the browser instance and add it to the test context.
@@ -95,12 +98,18 @@ module.exports = async function bffWebdriver (hook, context) {
       logLevel: context.webdriver.logLevel || context.logLevel,
       capabilities: context.testContext.capability
     })
-  } else if (hook === 'afterEach') {
+  },
+  async afterEach (context) {
+    const { Print } = require('@ianwalter/print')
+    const print = new Print({ level: context.logLevel })
     print.debug('Terminating WebdriverIO browser instance')
 
     // Tell Selenium to delete the browser session once the test is over.
     await context.testContext.browser.deleteSession()
-  } else if (hook === 'after') {
+  },
+  after (context) {
+    const { Print } = require('@ianwalter/print')
+    const print = new Print({ level: context.logLevel })
     if (seleniumStandalone) {
       print.debug('Stopping Selenium Standalone')
       seleniumStandalone.kill()
