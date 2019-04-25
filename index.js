@@ -74,8 +74,7 @@ module.exports = {
       // they can be run individually/in parallel.
       registrationContext.tests = registrationContext.tests.reduce(
         (acc, test) => acc.concat(capabilities.map(capability => {
-          // If BrowserStack is enabled, enhance the capability with data from
-          // the test.
+          // If BrowserStack is enabled, pass data to it through the capability.
           browserstack.enhanceCapability(webdriver, capability, test)
 
           // Modify the test name to contain the name of the browser it's being
@@ -134,6 +133,10 @@ module.exports = {
     const print = new Print({ level: context.logLevel })
     try {
       print.debug('Terminating WebdriverIO browser instance')
+      const browserstack = require('./lib/browserstack')
+
+      // If BrowserStack is enabled, report the test results to it.
+      await browserstack.report(context.webdriver, context.testContext)
 
       // Tell Selenium to delete the browser session once the test is over.
       await context.testContext.browser.deleteSession()
