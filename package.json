@@ -9,7 +9,7 @@
   "scripts": {
     "lint": "eslint index.js tests.js",
     "test": "bff",
-    "postinstall": "node postinstall.js"
+    "postinstall": "selenium-standalone install"
   },
   "repository": {
     "type": "git",
@@ -30,8 +30,7 @@
   ],
   "files": [
     "index.js",
-    "lib",
-    "postinstall.js"
+    "lib"
   ],
   "dependencies": {
     "@ianwalter/print": "^2.3.0",
