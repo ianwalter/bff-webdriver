@@ -136,7 +136,7 @@ module.exports = {
       const browserstack = require('./lib/browserstack')
 
       // If BrowserStack is enabled, report the test results to it.
-      await browserstack.report(context.webdriver, context.testContext)
+      await browserstack.report(context)
 
       // Tell Selenium to delete the browser session once the test is over.
       await context.testContext.browser.deleteSession()
