@@ -8,8 +8,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js tests.js",
-    "test": "bff",
-    "postinstall": "selenium-standalone install"
+    "test": "bff"
   },
   "repository": {
     "type": "git",
