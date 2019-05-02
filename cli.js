@@ -11,8 +11,9 @@ async function run () {
   try {
     if (command === 'setup') {
       const selenium = require('selenium-standalone')
+      const { version, drivers } = config.webdriver || {}
       await new Promise((resolve, reject) => {
-        selenium.install({ logger: print }, err => {
+        selenium.install({ logger: print.log, version, drivers }, err => {
           if (err) {
             reject(err)
           } else {

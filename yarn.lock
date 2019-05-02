@@ -192,6 +192,16 @@
     has-ansi "^3.0.0"
     has-emoji "^1.0.0"
 
+"@ianwalter/print@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@ianwalter/print/-/print-2.3.1.tgz#36e3ed258a9333f39d45e18e2297f987685b8c3d"
+  integrity sha512-cJSwa3eXMfqU3T/A82e48vnbHy0AJiELIQUD2saaDIxkEZZN01eX5euboLUPCf1Pt72Es5VWDnwScXf6fceFBw==
+  dependencies:
+    "@ianwalter/log" "^3.0.0"
+    chalk "^2.4.2"
+    has-ansi "^3.0.0"
+    has-emoji "^1.0.0"
+
 "@ianwalter/test-server@^1.3.0":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@ianwalter/test-server/-/test-server-1.3.0.tgz#15e8c12ed8da93f96e97e058c6e99372597b4c71"

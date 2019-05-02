@@ -1,11 +1,11 @@
 const fkill = require('fkill')
 
 module.exports = async function cleanup () {
-  await fkill([
+  const processes = [
     'selenium',
     'webdriver',
     'chromedriver',
-    'geckodriver',
-    'marionette'
-  ])
+    'geckodriver'
+  ]
+  await fkill(processes, { force: true, silent: true })
 }

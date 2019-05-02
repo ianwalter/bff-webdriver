@@ -144,7 +144,8 @@ module.exports = {
       print.error(err)
     }
   },
-  after (context) {
+  async after (context) {
+    const cleanup = require('./cleanup')
     const print = new Print({ level: context.logLevel })
     try {
       if (seleniumStandalone) {
@@ -156,6 +157,9 @@ module.exports = {
         print.debug('Stopping BrowserStack Local')
         browserstackLocal.stop()
       }
+
+      // Run cleanup in case there are any zombie processes hanging around.
+      await cleanup()
     } catch (err) {
       print.error(err)
     }
