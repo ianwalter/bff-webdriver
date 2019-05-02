@@ -16,10 +16,11 @@ module.exports = {
         print.debug('Starting Selenium Standalone')
         return new Promise((resolve, reject) => {
           const standalone = require('selenium-standalone')
-          const options = { spawnOptions: { stdio: 'inherit' } }
+          const spawnOptions = { stdio: 'inherit' }
+          const { version, drivers } = context.webdriver || {}
 
           // Start the Selenium Standalone server.
-          standalone.start(options, (err, child) => {
+          standalone.start({ spawnOptions, version, drivers }, (err, child) => {
             if (err) {
               if (child) {
                 // If there was an error but a child process was still created,
@@ -145,23 +146,27 @@ module.exports = {
     }
   },
   async after (context) {
-    const cleanup = require('./cleanup')
     const print = new Print({ level: context.logLevel })
-    try {
-      if (seleniumStandalone) {
-        // Kill the Selenium Standalone child process.
-        print.debug('Stopping Selenium Standalone')
+    if (seleniumStandalone) {
+      // Kill the Selenium Standalone child process.
+      print.debug('Stopping Selenium Standalone')
+      try {
         seleniumStandalone.kill()
-      } else if (browserstackLocal) {
-        // Stop the BrowserStack Local tunnel.
-        print.debug('Stopping BrowserStack Local')
-        browserstackLocal.stop()
+      } catch (err) {
+        print.error(err)
       }
-
-      // Run cleanup in case there are any zombie processes hanging around.
-      await cleanup()
-    } catch (err) {
-      print.error(err)
+    } else if (browserstackLocal) {
+      // Stop the BrowserStack Local tunnel.
+      print.debug('Stopping BrowserStack Local')
+      try {
+        browserstackLocal.stop()
+      } catch (err) {
+        print.error(err)
+      }
     }
+
+    // Run cleanup in case there are any zombie processes hanging around.
+    const cleanup = require('./cleanup')
+    await cleanup()
   }
 }

@@ -1,4 +1,4 @@
-const fkill = require('fkill')
+const execa = require('execa')
 
 module.exports = async function cleanup () {
   const processes = [
@@ -7,5 +7,9 @@ module.exports = async function cleanup () {
     'chromedriver',
     'geckodriver'
   ]
-  await fkill(processes, { force: true, silent: true })
+  try {
+    await execa('pkill', '-f', ...processes)
+  } catch (err) {
+    // We don't care about errors like pkill is not installed, etc.
+  }
 }
