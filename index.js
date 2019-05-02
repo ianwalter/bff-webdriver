@@ -44,8 +44,10 @@ module.exports = {
           // Assign the BrowserStack Local instance to the browserstackLocal
           // variable so that it can be stopped later when the after hook runs.
           browserstackLocal = new Local()
-          const verbose = context.logLevel === 'debug'
-          const options = { force: true, forceLocal: true, verbose }
+          const options = Object.assign(
+            { force: true, forceLocal: true, binarypath: __dirname },
+            context.webdriver.browserstackLocal
+          )
 
           // Start the BrowserStack Local tunnel.
           browserstackLocal.start(options, err => {
