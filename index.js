@@ -47,7 +47,8 @@ module.exports = {
       print.error(err)
     }
   },
-  registration ({ registrationContext, webdriver }) {
+  registration ({ registrationContext, webdriver, logLevel }) {
+    print = new Print({ level: logLevel })
     try {
       const BrowserStackIntegration = require('./integrations/browserstack')
       const ZaleniumIntegration = require('./integrations/zalenium')
@@ -89,10 +90,11 @@ module.exports = {
         []
       )
     } catch (err) {
-      print.error()
+      print.error(err)
     }
   },
   async beforeEach (context) {
+    print = new Print({ level: context.logLevel })
     try {
       print.debug('Creating WebdriverIO browser instance')
 

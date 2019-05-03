@@ -12,8 +12,7 @@
   "scripts": {
     "lint": "eslint index.js tests.js",
     "test": "bff",
-    "setup": "./cli.js setup",
-    "cleanup": "./cli.js cleanup"
+    "bff-webdriver": "./cli.js"
   },
   "repository": {
     "type": "git",
