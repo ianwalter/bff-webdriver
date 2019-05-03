@@ -52,7 +52,7 @@ module.exports = class BrowserStackIntegration {
       if (testContext.result.failed) {
         const response = await got(path, { baseUrl, auth, json: true })
         const url = response.body.automation_session.browser_url
-        this.print.info(`BrowserStack session:`, url)
+        this.print.info('BrowserStack session:', url)
       }
     } catch (err) {
       this.print.error(err)

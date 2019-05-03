@@ -9,44 +9,39 @@ module.exports = class ZaleniumIntegration {
   }
 
   static integrate (context) {
-    if (context.webdriver.browserstack) {
+    if (context.webdriver.zalenium) {
       context.webdriver.integrations.push(new ZaleniumIntegration(context))
     }
   }
 
   enhanceCapability (capability, test) {
     const options = {
-      // Tell BrowserStack the name of the test.
+      // Tell Zalenium the name of the test.
       name: test.name
     }
-    capability['bstack:options'] = Object.assign(
-      options,
-      this.options,
-      capability['bstack:options']
-    )
+    capability = Object.assign(options, capability)
   }
 
   async report ({ webdriver, testContext }) {
     try {
-      const got = require('got')
-
-      // Report the test result to BrowserStack via a HTTP call to the
-      // BrowserStack API.
-      const baseUrl = 'https://api.browserstack.com/automate/sessions'
-      const body = {
-        name: testContext.key,
-        status: testContext.result.failed ? 'error' : 'completed'
-      }
-      const auth = `${webdriver.user}:${webdriver.key}`
-      const path = `${testContext.browser.sessionId}.json`
-      await got(path, { baseUrl, method: 'PUT', auth, json: true, body })
-
-      // If the test failed, print the BrowserStack Dashboard URL for this
-      // session to make it easier for the user to debug.
+      const cookie = { name: 'zaleniumTestPassed' }
       if (testContext.result.failed) {
-        const response = await got(path, { baseUrl, auth, json: true })
-        const url = response.body.automation_session.browser_url
-        this.print.info(`BrowserStack session:`, url)
+        if (webdriver.zalenium.dashboardUrl) {
+          // If the test failed, print the Zalenium Dashboard URL for this
+          // session to make it easier for the user to debug.
+          const { oneLineTrim } = require('common-tags')
+          const url = oneLineTrim`
+            ${webdriver.zalenium.dashboardUrl}
+            ?q=${testContext.browser.sessionId}
+          `
+          this.print.info('Zalenium session:', url)
+        }
+
+        // Tell Zalenium the test failed by setting a cookie.
+        await testContext.browser.addCookie({ ...cookie, value: 'false' })
+      } else {
+        // Tell Zalenium the test passed by setting a cookie.
+        await testContext.browser.addCookie({ ...cookie, value: 'true' })
       }
     } catch (err) {
       this.print.error(err)

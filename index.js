@@ -113,10 +113,10 @@ module.exports = {
   async afterEach (context) {
     try {
       print.debug('Terminating WebdriverIO browser instance')
-      const browserstack = require('./lib/browserstack')
 
-      // If BrowserStack is enabled, report the test results to it.
-      await browserstack.report(context)
+      // Go through each enabled integration and report results to it, etc.
+      const toReport = async integration => integration.report(context)
+      await Promise.all(context.webdriver.integrations.map(toReport))
 
       // Tell Selenium to delete the browser session once the test is over.
       await context.testContext.browser.deleteSession()
