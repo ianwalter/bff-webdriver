@@ -50,15 +50,6 @@ module.exports = {
   registration (context) {
     print = new Print({ level: context.logLevel })
     try {
-      const BrowserStackIntegration = require('./integrations/browserstack')
-      const ZaleniumIntegration = require('./integrations/zalenium')
-
-      // Add enabled integrations to the integrations array so they can be used
-      // later.
-      context.webdriver.integrations = context.webdriver.integrations || []
-      BrowserStackIntegration.integrate(context)
-      ZaleniumIntegration.integrate(context)
-
       // Extract the WebDriver capabilities from the test configuration.
       const capabilities = Array.isArray(context.webdriver.capabilities)
         ? context.webdriver.capabilities
@@ -69,11 +60,6 @@ module.exports = {
       const { registrationContext } = context
       registrationContext.tests = registrationContext.tests.reduce(
         (acc, test) => acc.concat(capabilities.map(capability => {
-          // Go through each enabled integration and allow it to enahance the
-          // webdriver capability.
-          const enhanceCapability = i => i.enhanceCapability(capability, test)
-          context.webdriver.integrations.forEach(enhanceCapability)
-
           // Modify the test name to contain the name of the browser it's being
           // tested in.
           let name = `${test.name} in ${capability.browserName}`
@@ -96,6 +82,26 @@ module.exports = {
   },
   async beforeEach (context) {
     print = new Print({ level: context.logLevel })
+
+    try {
+      print.debug('Adding WebDriver integrations')
+      const BrowserStackIntegration = require('./integrations/browserstack')
+      const ZaleniumIntegration = require('./integrations/zalenium')
+
+      // Add enabled integrations to the integrations array so they can be used
+      // later.
+      context.webdriver.integrations = context.webdriver.integrations || []
+      BrowserStackIntegration.integrate(context)
+      ZaleniumIntegration.integrate(context)
+
+      // Go through each enabled integration and allow it to enahance the
+      // webdriver capability.
+      const enhanceCapability = i => i.enhanceCapability(context.testContext)
+      context.webdriver.integrations.forEach(enhanceCapability)
+    } catch (err) {
+      print.error(err)
+    }
+
     try {
       print.debug('Creating WebdriverIO browser instance')
 
@@ -116,39 +122,40 @@ module.exports = {
   },
   async afterEach (context) {
     try {
-      print.debug('Terminating WebdriverIO browser instance')
-
       // Go through each enabled integration and report results to it, etc.
+      print.debug('Running WebDriver integration reporting')
       const toReport = async integration => integration.report(context)
       await Promise.all(context.webdriver.integrations.map(toReport))
+    } catch (err) {
+      print.error(err)
+    }
 
+    try {
       // Tell Selenium to delete the browser session once the test is over.
+      print.debug('Terminating WebdriverIO browser instance')
       await context.testContext.browser.deleteSession()
     } catch (err) {
       print.error(err)
     }
   },
   async after (context) {
-    if (seleniumStandalone) {
-      // Kill the Selenium Standalone child process.
-      print.debug('Stopping Selenium Standalone')
-      try {
+    try {
+      if (seleniumStandalone) {
+        // Kill the Selenium Standalone child process.
+        print.debug('Stopping Selenium Standalone')
         seleniumStandalone.kill()
-      } catch (err) {
-        print.error(err)
-      }
-    } else if (shouldUseBsl(context.webdriver)) {
-      // Stop the BrowserStack Local tunnel.
-      print.debug('Stopping BrowserStack Local')
-      try {
+      } else if (shouldUseBsl(context.webdriver)) {
+        // Stop the BrowserStack Local tunnel.
+        print.debug('Stopping BrowserStack Local')
         const { stop } = require('@ianwalter/bsl')
         await stop()
-      } catch (err) {
-        print.error(err)
       }
+    } catch (err) {
+      print.error(err)
     }
 
     // Run cleanup in case there are any zombie processes hanging around.
+    print.debug('Running cleanup')
     const cleanup = require('./cleanup')
     await cleanup()
   }

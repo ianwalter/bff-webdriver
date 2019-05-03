@@ -4,6 +4,7 @@ module.exports = class ZaleniumIntegration {
   constructor (context) {
     // Set up a print instance on the integration instance so it can be reused.
     this.print = new Print({ level: context.logLevel })
+    this.print.debug('Zalenium integration enabled')
   }
 
   static integrate (context) {
@@ -12,12 +13,12 @@ module.exports = class ZaleniumIntegration {
     }
   }
 
-  enhanceCapability (capability, test) {
+  enhanceCapability (testContext) {
     const options = {
       // Tell Zalenium the name of the test.
-      name: test.name
+      name: testContext.name
     }
-    capability = Object.assign(options, capability)
+    testContext.capability = Object.assign(options, testContext.capability)
   }
 
   async report ({ webdriver, testContext }) {

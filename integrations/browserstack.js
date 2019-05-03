@@ -6,6 +6,7 @@ module.exports = class BrowserStackIntegration {
   constructor (context) {
     // Set up a print instance on the integration instance so it can be reused.
     this.print = new Print({ level: context.logLevel })
+    this.print.debug('BrowserStack integration enabled')
 
     // Define the global capability options.
     this.options = {
@@ -20,15 +21,15 @@ module.exports = class BrowserStackIntegration {
     }
   }
 
-  enhanceCapability (capability, test) {
+  enhanceCapability (testContext) {
     const options = {
       // Tell BrowserStack the name of the test.
-      name: test.name
+      name: testContext.name
     }
-    capability['bstack:options'] = Object.assign(
+    testContext.capability['bstack:options'] = Object.assign(
       options,
       this.options,
-      capability['bstack:options']
+      testContext.capability['bstack:options']
     )
   }
 
