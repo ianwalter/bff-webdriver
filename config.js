@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 module.exports = {
   before (context) {
     const standalone = process.env.SELENIUM_STANDALONE

@@ -34,7 +34,8 @@
   "files": [
     "index.js",
     "cleanup.js",
-    "cli.js"
+    "cli.js",
+    "integrations"
   ],
   "dependencies": {
     "@ianwalter/bsl": "^1.1.1",

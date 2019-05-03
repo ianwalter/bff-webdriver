@@ -1,5 +1,3 @@
-require('dotenv').config()
-
 const { Print } = require('@ianwalter/print')
 
 module.exports = class ZaleniumIntegration {
