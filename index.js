@@ -44,8 +44,9 @@ module.exports = {
           // Assign the BrowserStack Local instance to the browserstackLocal
           // variable so that it can be stopped later when the after hook runs.
           browserstackLocal = new Local()
+          const binarypath = `${__dirname}/BrowserStackLocal`
           const options = Object.assign(
-            { force: true, forceLocal: true, binarypath: `${__dirname}/bsl` },
+            { force: true, forceLocal: true, binarypath },
             context.webdriver.browserstackLocal
           )
 
