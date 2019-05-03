@@ -1,15 +1,16 @@
 const { Print } = require('@ianwalter/print')
 
+let print
 let seleniumStandalone
 
-const hasBsl = cap => cap['browserstack.local']
+const hasBsl = cap => cap['bstack:options'] && cap['bstack:options'].local
 const shouldUseBsl = ({ browserstackLocal, capabilities: cap }) =>
   browserstackLocal !== false &&
   (Array.isArray(cap) ? cap.some(hasBsl) : hasBsl(cap))
 
 module.exports = {
   async before (context) {
-    const print = new Print({ level: context.logLevel })
+    print = new Print({ level: context.logLevel })
     try {
       if (context.webdriver.standalone) {
         print.debug('Starting Selenium Standalone')
@@ -46,10 +47,15 @@ module.exports = {
       print.error(err)
     }
   },
-  registration ({ registrationContext, webdriver, logLevel }) {
-    const print = new Print({ level: logLevel })
+  registration ({ registrationContext, webdriver }) {
     try {
-      const browserstack = require('./lib/browserstack')
+      const BrowserStackIntegration = require('./integrations/browserstack')
+      const ZaleniumIntegration = require('./integrations/zalenium')
+
+      // TODO: comment
+      webdriver.integrations = webdriver.integrations || []
+      BrowserStackIntegration.integrate(webdriver)
+      ZaleniumIntegration.integrate(webdriver)
 
       // Extract the WebDriver capabilities from the test configuration.
       const capabilities = Array.isArray(webdriver.capabilities)
@@ -60,8 +66,10 @@ module.exports = {
       // they can be run individually/in parallel.
       registrationContext.tests = registrationContext.tests.reduce(
         (acc, test) => acc.concat(capabilities.map(capability => {
-          // If BrowserStack is enabled, pass data to it through the capability.
-          browserstack.enhanceCapability(webdriver, capability, test)
+          // Go through each enabled integration and allow it to enahance the
+          // webdriver capability.
+          const enhanceCapability = i => i.enhanceCapability(capability, test)
+          webdriver.integrations.forEach(enhanceCapability)
 
           // Modify the test name to contain the name of the browser it's being
           // tested in.
@@ -71,18 +79,6 @@ module.exports = {
           // being tested in, if configured.
           if (capability.browserVersion) {
             name += ` ${capability.browserVersion}`
-          }
-
-          // Modify the test name to contain the name of the OS the browser it's
-          // being tested in is running in, if configured.
-          if (browserstack.os) {
-            name += ` on ${browserstack.os}`
-          }
-
-          // Modify the test name to contain the name of the OS version the
-          // browser it's being test in is running in, if configured.
-          if (browserstack.osVersion) {
-            name += ` ${browserstack.osVersion}`
           }
 
           // Return the test with it's modified name and capability
@@ -96,7 +92,6 @@ module.exports = {
     }
   },
   async beforeEach (context) {
-    const print = new Print({ level: context.logLevel })
     try {
       print.debug('Creating WebdriverIO browser instance')
 
@@ -116,7 +111,6 @@ module.exports = {
     }
   },
   async afterEach (context) {
-    const print = new Print({ level: context.logLevel })
     try {
       print.debug('Terminating WebdriverIO browser instance')
       const browserstack = require('./lib/browserstack')
@@ -131,7 +125,6 @@ module.exports = {
     }
   },
   async after (context) {
-    const print = new Print({ level: context.logLevel })
     if (seleniumStandalone) {
       // Kill the Selenium Standalone child process.
       print.debug('Stopping Selenium Standalone')
