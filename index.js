@@ -13,12 +13,11 @@ module.exports = {
   webdriverVersion,
   async before (context) {
     print = new Print({ level: context.logLevel })
-
-    // Set the WebDriver version if not already configured.
-    context.webdriver.version = context.webdriver.version || webdriverVersion
-    print.debug('Using WebDriver version', context.webdriver.version)
-
     try {
+      // Set the WebDriver version if not already configured.
+      context.webdriver.version = context.webdriver.version || webdriverVersion
+      print.debug('Using WebDriver version', context.webdriver.version)
+
       if (context.webdriver.standalone) {
         print.debug('Starting Selenium Standalone')
         return new Promise((resolve, reject) => {
