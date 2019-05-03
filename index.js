@@ -47,31 +47,32 @@ module.exports = {
       print.error(err)
     }
   },
-  registration ({ registrationContext, webdriver, logLevel }) {
-    print = new Print({ level: logLevel })
+  registration (context) {
+    print = new Print({ level: context.logLevel })
     try {
       const BrowserStackIntegration = require('./integrations/browserstack')
       const ZaleniumIntegration = require('./integrations/zalenium')
 
       // Add enabled integrations to the integrations array so they can be used
       // later.
-      webdriver.integrations = webdriver.integrations || []
-      BrowserStackIntegration.integrate(webdriver)
-      ZaleniumIntegration.integrate(webdriver)
+      context.webdriver.integrations = context.webdriver.integrations || []
+      BrowserStackIntegration.integrate(context)
+      ZaleniumIntegration.integrate(context)
 
       // Extract the WebDriver capabilities from the test configuration.
-      const capabilities = Array.isArray(webdriver.capabilities)
-        ? webdriver.capabilities
-        : [webdriver.capabilities]
+      const capabilities = Array.isArray(context.webdriver.capabilities)
+        ? context.webdriver.capabilities
+        : [context.webdriver.capabilities]
 
       // Go through the browser tests and split them up by capability so that
       // they can be run individually/in parallel.
+      const { registrationContext } = context
       registrationContext.tests = registrationContext.tests.reduce(
         (acc, test) => acc.concat(capabilities.map(capability => {
           // Go through each enabled integration and allow it to enahance the
           // webdriver capability.
           const enhanceCapability = i => i.enhanceCapability(capability, test)
-          webdriver.integrations.forEach(enhanceCapability)
+          context.webdriver.integrations.forEach(enhanceCapability)
 
           // Modify the test name to contain the name of the browser it's being
           // tested in.
