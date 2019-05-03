@@ -1,25 +1,32 @@
 const { Print } = require('@ianwalter/print')
 
+let print
 let seleniumStandalone
-let browserstackLocal
+
+const webdriverVersion = '3.141.59'
+const hasBsl = cap => cap['bstack:options'] && cap['bstack:options'].local
+const shouldUseBsl = ({ browserstackLocal, capabilities: cap }) =>
+  browserstackLocal !== false &&
+  (Array.isArray(cap) ? cap.some(hasBsl) : hasBsl(cap))
 
 module.exports = {
-  before (context) {
-    const print = new Print({ level: context.logLevel })
-    const hasBsl = cap => cap['browserstack.local']
-    const shouldStartBsl = cap => Array.isArray(cap)
-      ? cap.some(hasBsl)
-      : hasBsl(cap)
-
+  webdriverVersion,
+  async before (context) {
+    print = new Print({ level: context.logLevel })
     try {
+      // Set the WebDriver version if not already configured.
+      context.webdriver.version = context.webdriver.version || webdriverVersion
+      print.debug('Using WebDriver version', context.webdriver.version)
+
       if (context.webdriver.standalone) {
         print.debug('Starting Selenium Standalone')
         return new Promise((resolve, reject) => {
           const standalone = require('selenium-standalone')
-          const options = { spawnOptions: { stdio: 'inherit' } }
+          const spawnOptions = { stdio: 'inherit' }
+          const { version, drivers } = context.webdriver || {}
 
           // Start the Selenium Standalone server.
-          standalone.start(options, (err, child) => {
+          standalone.start({ spawnOptions, version, drivers }, (err, child) => {
             if (err) {
               if (child) {
                 // If there was an error but a child process was still created,
@@ -35,36 +42,20 @@ module.exports = {
             }
           })
         })
-      } else if (shouldStartBsl(context.webdriver.capabilities)) {
+      } else if (shouldUseBsl(context.webdriver)) {
         print.debug('Starting BrowserStack Local')
-        return new Promise((resolve, reject) => {
-          const { Local } = require('browserstack-local')
+        const { start } = require('@ianwalter/bsl')
 
-          // Assign the BrowserStack Local instance to the browserstackLocal
-          // variable so that it can be stopped later when the after hook runs.
-          browserstackLocal = new Local()
-          const verbose = context.logLevel === 'debug'
-          const options = { force: true, forceLocal: true, verbose }
-
-          // Start the BrowserStack Local tunnel.
-          browserstackLocal.start(options, err => {
-            if (err) {
-              reject(err)
-            } else {
-              resolve()
-            }
-          })
-        })
+        // Start the BrowserStack Local tunnel.
+        await start(context.webdriver.browserstackLocal)
       }
     } catch (err) {
       print.error(err)
     }
   },
   registration ({ registrationContext, webdriver, logLevel }) {
-    const print = new Print({ level: logLevel })
+    print = new Print({ level: logLevel })
     try {
-      const browserstack = require('./lib/browserstack')
-
       // Extract the WebDriver capabilities from the test configuration.
       const capabilities = Array.isArray(webdriver.capabilities)
         ? webdriver.capabilities
@@ -74,9 +65,6 @@ module.exports = {
       // they can be run individually/in parallel.
       registrationContext.tests = registrationContext.tests.reduce(
         (acc, test) => acc.concat(capabilities.map(capability => {
-          // If BrowserStack is enabled, pass data to it through the capability.
-          browserstack.enhanceCapability(webdriver, capability, test)
-
           // Modify the test name to contain the name of the browser it's being
           // tested in.
           let name = `${test.name} in ${capability.browserName}`
@@ -87,18 +75,6 @@ module.exports = {
             name += ` ${capability.browserVersion}`
           }
 
-          // Modify the test name to contain the name of the OS the browser it's
-          // being tested in is running in, if configured.
-          if (browserstack.os) {
-            name += ` on ${browserstack.os}`
-          }
-
-          // Modify the test name to contain the name of the OS version the
-          // browser it's being test in is running in, if configured.
-          if (browserstack.osVersion) {
-            name += ` ${browserstack.osVersion}`
-          }
-
           // Return the test with it's modified name and capability
           // configuration.
           return { ...test, name, capability }
@@ -106,11 +82,31 @@ module.exports = {
         []
       )
     } catch (err) {
-      print.error()
+      print.error(err)
     }
   },
   async beforeEach (context) {
-    const print = new Print({ level: context.logLevel })
+    print = new Print({ level: context.logLevel })
+
+    try {
+      print.debug('Adding WebDriver integrations')
+      const BrowserStackIntegration = require('./integrations/browserstack')
+      const ZaleniumIntegration = require('./integrations/zalenium')
+
+      // Add enabled integrations to the integrations array so they can be used
+      // later.
+      context.webdriver.integrations = context.webdriver.integrations || []
+      BrowserStackIntegration.integrate(context)
+      ZaleniumIntegration.integrate(context)
+
+      // Go through each enabled integration and allow it to enahance the
+      // webdriver capability.
+      const enhanceCapability = i => i.enhanceCapability(context.testContext)
+      context.webdriver.integrations.forEach(enhanceCapability)
+    } catch (err) {
+      print.error(err)
+    }
+
     try {
       print.debug('Creating WebdriverIO browser instance')
 
@@ -130,34 +126,42 @@ module.exports = {
     }
   },
   async afterEach (context) {
-    const print = new Print({ level: context.logLevel })
     try {
-      print.debug('Terminating WebdriverIO browser instance')
-      const browserstack = require('./lib/browserstack')
+      // Go through each enabled integration and report results to it, etc.
+      print.debug('Running WebDriver integration reporting')
+      const toReport = async integration => integration.report(context)
+      await Promise.all(context.webdriver.integrations.map(toReport))
+    } catch (err) {
+      print.error(err)
+    }
 
-      // If BrowserStack is enabled, report the test results to it.
-      await browserstack.report(context)
-
+    try {
       // Tell Selenium to delete the browser session once the test is over.
+      print.debug('Terminating WebdriverIO browser instance')
       await context.testContext.browser.deleteSession()
     } catch (err) {
       print.error(err)
     }
   },
-  after (context) {
-    const print = new Print({ level: context.logLevel })
+  async after (context) {
     try {
       if (seleniumStandalone) {
         // Kill the Selenium Standalone child process.
         print.debug('Stopping Selenium Standalone')
         seleniumStandalone.kill()
-      } else if (browserstackLocal) {
+      } else if (shouldUseBsl(context.webdriver)) {
         // Stop the BrowserStack Local tunnel.
         print.debug('Stopping BrowserStack Local')
-        browserstackLocal.stop()
+        const { stop } = require('@ianwalter/bsl')
+        await stop()
       }
     } catch (err) {
       print.error(err)
     }
+
+    // Run cleanup in case there are any zombie processes hanging around.
+    print.debug('Running cleanup')
+    const cleanup = require('./cleanup')
+    await cleanup()
   }
 }
