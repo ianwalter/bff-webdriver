@@ -7,7 +7,7 @@ module.exports = class BrowserStackIntegration {
     // Set up a print instance on the integration instance so it can be reused.
     this.print = new Print({ level: context.logLevel })
 
-    // TODO:
+    // Define the global capability options.
     this.options = {
       userName: process.env.BROWSERSTACK_USERNAME,
       accessKey: process.env.BROWSERSTACK_ACCESS_KEY

@@ -52,7 +52,8 @@ module.exports = {
       const BrowserStackIntegration = require('./integrations/browserstack')
       const ZaleniumIntegration = require('./integrations/zalenium')
 
-      // TODO: comment
+      // Add enabled integrations to the integrations array so they can be used
+      // later.
       webdriver.integrations = webdriver.integrations || []
       BrowserStackIntegration.integrate(webdriver)
       ZaleniumIntegration.integrate(webdriver)
