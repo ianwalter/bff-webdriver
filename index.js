@@ -1,16 +1,15 @@
 const { Print } = require('@ianwalter/print')
 
 let seleniumStandalone
-let browserstackLocal
+
+const hasBsl = cap => cap['browserstack.local']
+const shouldUseBsl = ({ browserstackLocal, capabilities: cap }) =>
+  browserstackLocal !== false &&
+  (Array.isArray(cap) ? cap.some(hasBsl) : hasBsl(cap))
 
 module.exports = {
-  before (context) {
+  async before (context) {
     const print = new Print({ level: context.logLevel })
-    const hasBsl = cap => cap['browserstack.local']
-    const shouldStartBsl = cap => Array.isArray(cap)
-      ? cap.some(hasBsl)
-      : hasBsl(cap)
-
     try {
       if (context.webdriver.standalone) {
         print.debug('Starting Selenium Standalone')
@@ -36,29 +35,12 @@ module.exports = {
             }
           })
         })
-      } else if (shouldStartBsl(context.webdriver.capabilities)) {
+      } else if (shouldUseBsl(context.webdriver)) {
         print.debug('Starting BrowserStack Local')
-        return new Promise((resolve, reject) => {
-          const { Local } = require('browserstack-local')
+        const { start } = require('@ianwalter/bsl')
 
-          // Assign the BrowserStack Local instance to the browserstackLocal
-          // variable so that it can be stopped later when the after hook runs.
-          browserstackLocal = new Local()
-          const binarypath = `${__dirname}/BrowserStackLocal`
-          const options = Object.assign(
-            { force: true, forceLocal: true, binarypath },
-            context.webdriver.browserstackLocal
-          )
-
-          // Start the BrowserStack Local tunnel.
-          browserstackLocal.start(options, err => {
-            if (err) {
-              reject(err)
-            } else {
-              resolve()
-            }
-          })
-        })
+        // Start the BrowserStack Local tunnel.
+        await start(context.webdriver.browserstackLocal)
       }
     } catch (err) {
       print.error(err)
@@ -158,11 +140,12 @@ module.exports = {
       } catch (err) {
         print.error(err)
       }
-    } else if (browserstackLocal) {
+    } else if (shouldUseBsl(context.webdriver)) {
       // Stop the BrowserStack Local tunnel.
       print.debug('Stopping BrowserStack Local')
       try {
-        browserstackLocal.stop()
+        const { stop } = require('@ianwalter/bsl')
+        await stop()
       } catch (err) {
         print.error(err)
       }
