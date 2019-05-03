@@ -8,6 +8,13 @@ module.exports = class BrowserStackIntegration {
     this.print = new Print({ level: context.logLevel })
     this.print.debug('BrowserStack integration enabled')
 
+    // Make BrowserStack the WebDriver backend if not already configured.
+    if (!context.webdriver.hostname) {
+      context.webdriver.protocol = 'https'
+      context.webdriver.hostname = 'hub-cloud.browserstack.com'
+      context.webdriver.port = 443
+    }
+
     // Define the global capability options.
     this.options = {
       userName: process.env.BROWSERSTACK_USERNAME,
@@ -24,7 +31,7 @@ module.exports = class BrowserStackIntegration {
   enhanceCapability (testContext) {
     const options = {
       // Tell BrowserStack the name of the test.
-      name: testContext.name
+      sessionName: testContext.key
     }
     testContext.capability['bstack:options'] = Object.assign(
       options,
@@ -44,7 +51,7 @@ module.exports = class BrowserStackIntegration {
         name: testContext.key,
         status: testContext.result.failed ? 'error' : 'completed'
       }
-      const auth = `${webdriver.user}:${webdriver.key}`
+      const auth = `${this.options.userName}:${this.options.accessKey}`
       const path = `${testContext.browser.sessionId}.json`
       await got(path, { baseUrl, method: 'PUT', auth, json: true, body })
 

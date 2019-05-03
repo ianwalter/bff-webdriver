@@ -3,14 +3,21 @@ const { Print } = require('@ianwalter/print')
 let print
 let seleniumStandalone
 
+const webdriverVersion = '3.141.59'
 const hasBsl = cap => cap['bstack:options'] && cap['bstack:options'].local
 const shouldUseBsl = ({ browserstackLocal, capabilities: cap }) =>
   browserstackLocal !== false &&
   (Array.isArray(cap) ? cap.some(hasBsl) : hasBsl(cap))
 
 module.exports = {
+  webdriverVersion,
   async before (context) {
     print = new Print({ level: context.logLevel })
+
+    // Set the WebDriver version if not already configured.
+    context.webdriver.version = context.webdriver.version || webdriverVersion
+    print.debug('Using WebDriver version', context.webdriver.version)
+
     try {
       if (context.webdriver.standalone) {
         print.debug('Starting Selenium Standalone')
@@ -47,17 +54,16 @@ module.exports = {
       print.error(err)
     }
   },
-  registration (context) {
-    print = new Print({ level: context.logLevel })
+  registration ({ registrationContext, webdriver, logLevel }) {
+    print = new Print({ level: logLevel })
     try {
       // Extract the WebDriver capabilities from the test configuration.
-      const capabilities = Array.isArray(context.webdriver.capabilities)
-        ? context.webdriver.capabilities
-        : [context.webdriver.capabilities]
+      const capabilities = Array.isArray(webdriver.capabilities)
+        ? webdriver.capabilities
+        : [webdriver.capabilities]
 
       // Go through the browser tests and split them up by capability so that
       // they can be run individually/in parallel.
-      const { registrationContext } = context
       registrationContext.tests = registrationContext.tests.reduce(
         (acc, test) => acc.concat(capabilities.map(capability => {
           // Modify the test name to contain the name of the browser it's being

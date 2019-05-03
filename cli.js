@@ -2,6 +2,7 @@
 
 const cli = require('@ianwalter/cli')
 const { Print } = require('@ianwalter/print')
+const { webdriverVersion } = require('.')
 
 async function run () {
   const config = cli({ name: 'bff' })
@@ -11,7 +12,7 @@ async function run () {
   try {
     if (command === 'setup') {
       const selenium = require('selenium-standalone')
-      const { version, drivers } = config.webdriver || {}
+      const { version = webdriverVersion, drivers } = config.webdriver || {}
       await new Promise((resolve, reject) => {
         selenium.install({ logger: print.log, version, drivers }, err => {
           if (err) {

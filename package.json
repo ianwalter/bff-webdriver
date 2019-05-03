@@ -60,13 +60,12 @@
       "index"
     ],
     "webdriver": {
-      "version": "3.141.59",
       "capabilities": {
         "browserName": "firefox",
         "bstack:options": {
           "local": true,
           "projectName": "bff-webdriver",
-          "timezone": "EST"
+          "timezone": "New_York"
         }
       }
     }
