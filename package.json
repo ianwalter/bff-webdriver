@@ -44,6 +44,7 @@
     "dotenv": "^7.0.0",
     "execa": "^1.0.0",
     "got": "^9.6.0",
+    "p-settle": "^3.1.0",
     "selenium-standalone": "^6.16.0",
     "webdriverio": "^5.7.14"
   },

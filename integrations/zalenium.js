@@ -16,7 +16,7 @@ module.exports = class ZaleniumIntegration {
   enhanceCapability (testContext) {
     const options = {
       // Tell Zalenium the name of the test.
-      name: testContext.key
+      'zal:name': testContext.key
     }
     testContext.capability = Object.assign(options, testContext.capability)
   }

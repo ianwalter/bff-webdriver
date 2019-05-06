@@ -1,15 +1,13 @@
 const execa = require('execa')
+const pSettle = require('p-settle')
 
 module.exports = async function cleanup () {
-  const processes = [
+  const names = [
     'selenium',
     'webdriver',
     'chromedriver',
-    'geckodriver'
+    'geckodriver',
+    'marionette'
   ]
-  try {
-    await execa('pkill', '-f', ...processes)
-  } catch (err) {
-    // We don't care about errors like pkill is not installed, etc.
-  }
+  await pSettle(names.map(async name => execa('pkill', ['-f', name])))
 }
