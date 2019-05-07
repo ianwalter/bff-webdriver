@@ -28,11 +28,12 @@ module.exports = class ZaleniumIntegration {
         if (webdriver.zalenium.dashboardUrl) {
           // If the test failed, print the Zalenium Dashboard URL for this
           // session to make it easier for the user to debug.
-          const { oneLineTrim } = require('common-tags')
-          const url = oneLineTrim`
-            ${webdriver.zalenium.dashboardUrl}
-            ?q=${testContext.browser.sessionId}
+          const { oneLine } = require('common-tags')
+          const query = oneLine`
+            ${testContext.capability['zal:name']}
+            ${testContext.capability['zal:build']}
           `
+          const url = `${webdriver.zalenium.dashboardUrl}?q=${encodeURI(query)}`
           this.print.info('Zalenium session:', url)
         }
 
