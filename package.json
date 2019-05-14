@@ -49,7 +49,7 @@
     "webdriverio": "^5.7.14"
   },
   "devDependencies": {
-    "@ianwalter/bff": "^4.0.1",
+    "@ianwalter/bff": "^4.0.2",
     "@ianwalter/eslint-config": "^1.1.2",
     "@ianwalter/renovate-config": "^1.1.0",
     "@ianwalter/test-server": "^1.3.0",
