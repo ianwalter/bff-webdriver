@@ -18,8 +18,7 @@ action "Lint" {
 action "Test" {
   uses = "docker://node:12"
   needs = ["Install"]
-  runs = "/bin/bash"
-  args = "-c 'set -e && yarn test'"
+  runs = ["/bin/bash", "-c", "set -e && yarn test"]
   secrets = [
     "BROWSERSTACK_USERNAME",
     "BROWSERSTACK_ACCESS_KEY",
