@@ -12,7 +12,8 @@
   "scripts": {
     "lint": "eslint index.js tests.js",
     "test": "bff",
-    "bff-webdriver": "./cli.js"
+    "bff-webdriver": "./cli.js",
+    "postinstall": "./cli.js setup"
   },
   "repository": {
     "type": "git",
@@ -46,7 +47,7 @@
     "got": "^9.6.0",
     "p-settle": "^3.1.0",
     "selenium-standalone": "^6.16.0",
-    "webdriverio": "^5.7.14"
+    "webdriverio": "^5.8.3"
   },
   "devDependencies": {
     "@ianwalter/bff": "^4.0.2",
