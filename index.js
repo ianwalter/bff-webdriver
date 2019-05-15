@@ -120,7 +120,9 @@ module.exports = {
 
       // Add the expect instance to the browser instance so that the user can
       // more easily create commands that involve making assertions.
-      context.testContext.browser.expect = context.testContext.expect
+      context.testContext.browser.expect = (...args) => (
+        context.testContext.expect(...args)
+      )
     } catch (err) {
       print.error(err)
     }
