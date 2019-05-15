@@ -159,9 +159,11 @@ module.exports = {
       print.error(err)
     }
 
-    // Run cleanup in case there are any zombie processes hanging around.
-    print.debug('Running cleanup')
-    const cleanup = require('./cleanup')
-    await cleanup()
+    // Run cleanup in case there are any orphaned processes hanging around.
+    setTimeout(async () => {
+      print.debug('Running cleanup')
+      const cleanup = require('./cleanup')
+      await cleanup()
+    }, 100)
   }
 }
