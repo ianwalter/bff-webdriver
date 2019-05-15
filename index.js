@@ -53,7 +53,7 @@ module.exports = {
       print.error(err)
     }
   },
-  registration ({ registrationContext, webdriver, logLevel }) {
+  registration (file, { logLevel, webdriver }) {
     print = new Print({ level: logLevel })
     try {
       // Extract the WebDriver capabilities from the test configuration.
@@ -63,7 +63,7 @@ module.exports = {
 
       // Go through the browser tests and split them up by capability so that
       // they can be run individually/in parallel.
-      registrationContext.tests = registrationContext.tests.reduce(
+      file.tests = file.tests.reduce(
         (acc, test) => acc.concat(capabilities.map(capability => {
           // Modify the test name to contain the name of the browser it's being
           // tested in.
