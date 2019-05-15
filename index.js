@@ -160,10 +160,10 @@ module.exports = {
     }
 
     // Run cleanup in case there are any orphaned processes hanging around.
-    setTimeout(async () => {
+    if (context.hasFastFailure) {
       print.debug('Running cleanup')
       const cleanup = require('./cleanup')
       await cleanup()
-    }, 100)
+    }
   }
 }
