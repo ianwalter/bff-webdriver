@@ -126,10 +126,10 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@ianwalter/bff@^5.0.0-1":
-  version "5.0.0-1"
-  resolved "https://registry.yarnpkg.com/@ianwalter/bff/-/bff-5.0.0-1.tgz#ceef7b07aa7c910d98f12fce411bab4cbdb7d5f5"
-  integrity sha512-QSgRq35vGwmRjkHmeN/S32LfZsoR0vS225I6vPXg0nlfV1hwLm36o7t1lUQ4NgCOXzcQSUyyxZJ5wo3P1p5H7w==
+"@ianwalter/bff@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@ianwalter/bff/-/bff-5.0.0.tgz#0a6f5eae168a8fd7c92d1abd21e02681d1526af7"
+  integrity sha512-1UnbdBwoYNBn9XRxW8/mQovd5MmryNFUp+5UdvpfnvMbJBzwXmsUQDcHzOnOhTNNv4GnfSYseZnB9ltGXI1hcg==
   dependencies:
     "@ianwalter/cli" "^1.1.1"
     "@ianwalter/print" "^2.3.1"
