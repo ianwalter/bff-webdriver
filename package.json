@@ -10,7 +10,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "lint": "eslint index.js tests.js",
+    "lint": "eslint .",
     "test": "bff",
     "bff-webdriver": "./cli.js",
     "postinstall": "./cli.js setup"
