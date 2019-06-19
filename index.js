@@ -53,17 +53,17 @@ module.exports = {
       print.error(err)
     }
   },
-  registration (file, { logLevel, webdriver }) {
-    print = new Print({ level: logLevel })
+  registration (file, context) {
+    print = new Print({ level: context.logLevel })
     try {
       // Extract the WebDriver capabilities from the test configuration.
-      const capabilities = Array.isArray(webdriver.capabilities)
-        ? webdriver.capabilities
-        : [webdriver.capabilities]
+      const capabilities = Array.isArray(context.webdriver.capabilities)
+        ? context.webdriver.capabilities
+        : [context.webdriver.capabilities]
 
       // Go through the browser tests and split them up by capability so that
       // they can be run individually/in parallel.
-      file.tests = file.tests.reduce(
+      context.augmentTests = tests => tests.reduce(
         (acc, test) => acc.concat(capabilities.map(capability => {
           // Modify the test name to contain the name of the browser it's being
           // tested in.
@@ -85,7 +85,7 @@ module.exports = {
       print.error(err)
     }
   },
-  async beforeEach (context) {
+  async beforeEach (file, context) {
     print = new Print({ level: context.logLevel })
 
     try {
@@ -127,7 +127,7 @@ module.exports = {
       print.error(err)
     }
   },
-  async afterEach (context) {
+  async afterEach (file, context) {
     try {
       // Go through each enabled integration and report results to it, etc.
       print.debug('Running WebDriver integration reporting')
