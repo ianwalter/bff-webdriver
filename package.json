@@ -1,7 +1,7 @@
 {
   "name": "@ianwalter/bff-webdriver",
   "description": "A bff plugin to enable WebDriver-based testing",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "author": "Ian Walter <public@iankwalter.com> (https://iankwalter.com)",
   "homepage": "https://github.com/ianwalter/bff-webdriver#readme",
   "license": "SEE LICENSE IN LICENSE",
