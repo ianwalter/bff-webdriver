@@ -52,9 +52,9 @@
   "devDependencies": {
     "@ianwalter/bff": "^6.3.1",
     "@ianwalter/eslint-config": "^2.0.1",
+    "@ianwalter/release": "^0.0.12",
     "@ianwalter/renovate-config": "^1.1.1",
-    "@ianwalter/test-server": "^1.4.3",
-    "np": "^5.0.3"
+    "@ianwalter/test-server": "^1.4.3"
   },
   "bff": {
     "logLevel": "debug",
