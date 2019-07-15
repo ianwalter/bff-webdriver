@@ -247,10 +247,10 @@
     has-ansi "^3.0.0"
     has-emoji "^1.0.0"
 
-"@ianwalter/release@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@ianwalter/release/-/release-1.0.1.tgz#d3f9139471b0e0afd94318ce09b7d294a80cb842"
-  integrity sha512-S1r0tDsDcER1cfw7ky6i+SLqGkIYjakspSIi1GcR7xVHmGRYNuCS2Vr36cr2ZQ3egGienHjbtOeqtfYdgRpGJg==
+"@ianwalter/release@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@ianwalter/release/-/release-1.0.2.tgz#1deb8b65683f547d64e923f531bc5ae6985d87e9"
+  integrity sha512-Xeaz73wPDuMisDWHfPgAA3ZwBmgDhnpKFbJOUvFHJNpaWc2pYRNB3ekSM4T6YCJuapehQ9suHjOHG/h9O8sx5w==
   dependencies:
     "@ianwalter/cli" "^1.2.0"
     "@ianwalter/commits" "^0.0.5"
