@@ -247,14 +247,15 @@
     has-ansi "^3.0.0"
     has-emoji "^1.0.0"
 
-"@ianwalter/release@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@ianwalter/release/-/release-1.1.0.tgz#d23e85ce86432773ffc864bb4f742f1ec310a3de"
-  integrity sha512-ztk80jDl/+vDPc++k/Jow/wS4XujC1n3OhvwQSNFwwyltxQey8cwO3KNBSVh9Eg3KHu1nICQZDKlugK3oW+7nQ==
+"@ianwalter/release@^1.1.7":
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/@ianwalter/release/-/release-1.1.7.tgz#aa7d08467f41a3fdc8e6ad0e53a0f9343d8ffb56"
+  integrity sha512-Qy8AOnuvIewtGV64A+GkarYhEbOUU0B0PRmwuf3oiZRbmmB0RCn0YZunsWlmsttjWitwe0kDNKi0FMFuGnr5rQ==
   dependencies:
     "@ianwalter/cli" "^1.2.0"
     "@ianwalter/commits" "^0.0.5"
     "@ianwalter/print" "^3.0.1"
+    "@ianwalter/update-package" "^0.0.2"
     common-tags "^1.8.0"
     execa "^2.0.3"
     marked "^0.7.0"
@@ -262,7 +263,6 @@
     new-github-release-url "^1.0.0"
     prompts "^2.1.0"
     semver "^6.2.0"
-    write-pkg "^4.0.0"
 
 "@ianwalter/renovate-config@^1.1.1":
   version "1.1.1"
@@ -287,6 +287,15 @@
     koa-bodyparser "^4.2.1"
     koa-json "^2.0.2"
     server-destroy "^1.0.1"
+
+"@ianwalter/update-package@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@ianwalter/update-package/-/update-package-0.0.2.tgz#b60e688203f7cec5993c7ca2df6cb267f331dbe1"
+  integrity sha512-UDpblOrOaHsZJdAOMzijpD86TfSrlEGzYlz/9b5e+rz1/Icy7nADWU6HdPCAy2ZXDJorwUDIQCJnhnnfFFfXbQ==
+  dependencies:
+    "@ianwalter/merge" "^5.0.0"
+    read-pkg-up "^6.0.0"
+    write-pkg "^4.0.0"
 
 "@jest/console@^24.7.1":
   version "24.7.1"
