@@ -4934,10 +4934,10 @@ webdriver@^5.11.13:
     lodash.merge "^4.6.1"
     request "^2.83.0"
 
-webdriverio@^5.11.13:
-  version "5.11.13"
-  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-5.11.13.tgz#ac56ad395d2906ad53abce78717d287bae54acc0"
-  integrity sha512-GTH4aNP4GzuxmeF+CLXIEyfYccXV2hANhqw+cQPE3U0qZ0ir3ZTSTLre90gHVJzY6rcgx0QzIMazuUbNB0kVoA==
+webdriverio@^5.11.14:
+  version "5.11.14"
+  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-5.11.14.tgz#e745cfc4b212754cfc95b6fa374db171adc4028a"
+  integrity sha512-Tt0eq6VjaJOU93kvjyyLD5uHuz7iYx9VCg52GDwGCSE4hq21m9sEO9VFogvhj2QCgxEIR/+CNPoeMVd9R2kXSg==
   dependencies:
     "@wdio/config" "^5.11.0"
     "@wdio/logger" "^5.11.0"
