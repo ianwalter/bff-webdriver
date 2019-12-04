@@ -40,7 +40,7 @@
   ],
   "dependencies": {
     "@ianwalter/bsl": "^2.0.1",
-    "@ianwalter/cli": "^1.2.0",
+    "@ianwalter/cli": "^2.2.1",
     "@ianwalter/print": "^3.8.0",
     "dotenv": "^8.2.0",
     "execa": "^3.2.0",
