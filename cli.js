@@ -5,7 +5,15 @@ const { Print } = require('@ianwalter/print')
 const { webdriverVersion } = require('.')
 
 async function run () {
-  const config = cli({ name: 'bff' })
+  const config = cli({
+    name: 'bff',
+    options: {
+      logLevel: {
+        alias: 'l',
+        default: 'info'
+      }
+    }
+  })
   const print = new Print({ level: config.logLevel })
   const { _: [command] } = config
 
