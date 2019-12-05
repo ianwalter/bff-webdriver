@@ -51,14 +51,17 @@ module.exports = class BrowserStackIntegration {
         name: testContext.key,
         status: testContext.result.failed ? 'error' : 'completed'
       }
-      const auth = `${this.options.userName}:${this.options.accessKey}`
+      const auth = {
+        username: this.options.userName,
+        password: this.options.accessKey
+      }
       const path = `${testContext.browser.sessionId}.json`
-      await got(path, { prefixUrl, method: 'PUT', auth, json: true, body })
+      await got(path, { prefixUrl, method: 'PUT', ...auth, json: true, body })
 
       // If the test failed, print the BrowserStack Dashboard URL for this
       // session to make it easier for the user to debug.
       if (testContext.result.failed) {
-        const response = await got(path, { prefixUrl, auth, json: true })
+        const response = await got(path, { prefixUrl, ...auth, json: true })
         const url = response.body.automation_session.browser_url
         this.print.info('BrowserStack session:', url)
       }
