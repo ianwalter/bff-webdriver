@@ -56,7 +56,7 @@ module.exports = class BrowserStackIntegration {
         password: this.options.accessKey
       }
       const path = `${testContext.browser.sessionId}.json`
-      await got(path, { prefixUrl, method: 'PUT', ...auth, json })
+      await got.put(path, { prefixUrl, ...auth, json })
 
       // If the test failed, print the BrowserStack Dashboard URL for this
       // session to make it easier for the user to debug.
