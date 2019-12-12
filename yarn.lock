@@ -111,16 +111,14 @@
   resolved "https://registry.yarnpkg.com/@ianwalter/clone/-/clone-4.1.0.tgz#635860922699338da607b8e990ae5173e3e3e9c9"
   integrity sha512-UWlp3DtPvLgZkS3hy6ihHQATjQC1BtoJxk4PCO/v7r8m7P4g0WkdacadpUh0ze3yNqO+uFIRW2RX1boGz7feQQ==
 
-"@ianwalter/commits@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@ianwalter/commits/-/commits-0.0.6.tgz#1b2663f9c2750199e817a017934f205a93459a79"
-  integrity sha512-U0eINURoSUnc9yRtaH28OQTn9QLS0L6b1BfdXDSRmaeBa14qTgzH8/dYANsDRFuB4TwIKO3YbhbkFyx86kedFQ==
+"@ianwalter/commits@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@ianwalter/commits/-/commits-1.0.1.tgz#facc6b717d1a202284267bd5c7685893f18e321a"
+  integrity sha512-tRK8mvZ5O0Ah8gZpN/ahkcqpAu/jG27dYfLlrgMYAXH0J42xXE5igATI7svSu6qJ7VHNZZc9dml63/hKmKADBw==
   dependencies:
-    "@ianwalter/cli" "^1.2.0"
-    "@ianwalter/print" "^3.3.1"
-    execa "^2.0.4"
-    marked "^0.7.0"
-    marked-terminal "^3.3.0"
+    "@ianwalter/cli" "^3.0.0"
+    "@ianwalter/print" "^4.0.0"
+    execa "^3.4.0"
     strip "^3.0.0"
 
 "@ianwalter/eslint-config@^3.1.0":
@@ -143,53 +141,25 @@
   dependencies:
     "@ianwalter/subpub" "^2.0.0"
 
-"@ianwalter/log@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@ianwalter/log/-/log-3.0.0.tgz#c85f7343e28e98d0a4c872a42e6bdd6d8b302e8d"
-  integrity sha512-CAB1LaZUDUvQexuZYXmRhaFrpNqguIwA+ciB8+uvDm9dakNX3H+Yd7VIOisvx/y4GljH2hSrlTfCzhy14/0/YQ==
-
 "@ianwalter/log@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@ianwalter/log/-/log-3.1.0.tgz#e01bd09cf27e012f07d534a04b9a07c0e0d7b226"
   integrity sha512-6sROPtR86sdcE4ZW3LBqKlsDe8WLOkQqsfhYI8F9nAfFTgV0cjdYjQw6jkruafKzNb2CxPfv7ut0x55L2X7nGw==
+
+"@ianwalter/log@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@ianwalter/log/-/log-4.0.0.tgz#1b5b51b566cdcf9199c86c6e40c3e5e2b69cf627"
+  integrity sha512-4iwQrfDSnDZqy8RMmvNqprANs2v3MsEuUOTCpgBv+/dMVpm4dtNju55ILWw9831qQxzwWN3Or/ssUdSJjL8Mvw==
 
 "@ianwalter/merge@^5.0.0":
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@ianwalter/merge/-/merge-5.0.0.tgz#972b3cd668ab87416fba1af99186cd83d34d687f"
   integrity sha512-Z+Xn8dT0ApkjGizdwMQaCgsAyHO+zKhCC2OYO7lEYLs1IdCzXtRUYah3vkIWT8/Ad94ni0rxtR39VTRWJE1/Qw==
 
-"@ianwalter/print@^3.3.1":
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/@ianwalter/print/-/print-3.3.1.tgz#0901f58c9f557714f20f254014bad504f88d1ba4"
-  integrity sha512-RtpdwIVvwcKLnV74hv7ABtqb1Va2V7Yg7wrf/zZiHpqmmpICQlW4KqNJLsu7to6T8kMtAb64+RrgHBpvVnKFhw==
-  dependencies:
-    "@ianwalter/chromafi" "^1.0.1"
-    "@ianwalter/clone" "^4.1.0"
-    "@ianwalter/log" "^3.0.0"
-    chalk "^2.4.2"
-    has-ansi "^4.0.0"
-    has-emoji "^1.1.0"
-    marked "^0.7.0"
-    marked-terminal "^3.3.0"
-
 "@ianwalter/print@^3.4.0", "@ianwalter/print@^3.6.0":
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/@ianwalter/print/-/print-3.6.0.tgz#2de0528d599f241f1ea5560fa04220b057f5d43c"
   integrity sha512-/ceB61lZaH6vap6R1oI0aLKLUtcu2yL/StZdRH47Yxbxu1beUAkMTKI5iYd4M50bsxhvX4WuLihIMQFVz/kFDQ==
-  dependencies:
-    "@ianwalter/chromafi" "^1.0.1"
-    "@ianwalter/clone" "^4.1.0"
-    "@ianwalter/log" "^3.1.0"
-    chalk "^2.4.2"
-    has-ansi "^4.0.0"
-    has-emoji "^1.1.0"
-    marked "^0.7.0"
-    marked-terminal "^3.3.0"
-
-"@ianwalter/print@^3.8.0":
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/@ianwalter/print/-/print-3.8.0.tgz#5367d285a65ff26a61ef15a3b2ac3e2aa7cfcd73"
-  integrity sha512-UMpYt+Z3qA20UvBLDBmRbfYXpWz/MrpWcyWIPErjw2pu9TNFxu0eCg1UcKB9hbjOlOHbTaFpGLc+BNsUa/fOAw==
   dependencies:
     "@ianwalter/chromafi" "^1.0.1"
     "@ianwalter/clone" "^4.1.0"
@@ -215,20 +185,35 @@
     marked-terminal "^3.3.0"
     strip-ansi "^6.0.0"
 
-"@ianwalter/release@^3.0.6":
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/@ianwalter/release/-/release-3.0.6.tgz#9e5b975469ee3176b99fd770d7d75028fbef73b5"
-  integrity sha512-8f9bF5kp3vSisP37thy2vxpoFJE2MzQZbaLuARr3vmWhH6foXzD1X/qcapLgA74/hh1PCybcDhrRYIMNMc43vA==
+"@ianwalter/print@^4.0.0":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@ianwalter/print/-/print-4.0.1.tgz#cc32d8f8b1a687d40a9c27b55f314d5a108434a6"
+  integrity sha512-9MsZXJcAQ1FY1+mJR5jbYDA9E8JakC5CnkXfasK8PAVrsyS5Q96s6VajuOkF4asSt4+k7ehEaWlKme1Zzq619Q==
   dependencies:
-    "@ianwalter/cli" "^1.2.0"
-    "@ianwalter/commits" "^0.0.6"
-    "@ianwalter/print" "^3.8.0"
+    "@ianwalter/chromafi" "^1.0.1"
+    "@ianwalter/clone" "^4.1.0"
+    "@ianwalter/log" "^4.0.0"
+    chalk "^3.0.0"
+    has-ansi "^4.0.0"
+    has-emoji "^1.1.0"
+    marked "^0.7.0"
+    marked-terminal "^3.3.0"
+    strip-ansi "^6.0.0"
+
+"@ianwalter/release@^3.0.7":
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/@ianwalter/release/-/release-3.0.7.tgz#2fb4fedc542f7338ce149099b736530d88b84fac"
+  integrity sha512-ytuQzgVtlku3e2XzpFPZRV2tzr5bIo/xn8hCRxxiElpfyXu0niZmxknQoQlVLbL+yu4+eaCLx/HvJVtQz/E4ag==
+  dependencies:
+    "@ianwalter/cli" "^3.0.0"
+    "@ianwalter/commits" "^1.0.1"
+    "@ianwalter/print" "^4.0.0"
     "@ianwalter/update-package" "^0.0.2"
     common-tags "^1.8.0"
-    execa "^3.2.0"
+    execa "^3.4.0"
     latest-version "^5.1.0"
     new-github-release-url "^1.0.0"
-    prompts "^2.2.1"
+    prompts "^2.3.0"
     semver "^6.3.0"
 
 "@ianwalter/renovate-config@^1.2.0":
@@ -1868,21 +1853,6 @@ etag@~1.8.1:
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
 
-execa@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/execa/-/execa-2.0.4.tgz#2f5cc589c81db316628627004ea4e37b93391d8e"
-  integrity sha512-VcQfhuGD51vQUQtKIq2fjGDLDbL6N1DTQVpYzxZ7LPIXw3HqTuIz6uxRmpV1qf8i31LHf2kjiaGI+GdHwRgbnQ==
-  dependencies:
-    cross-spawn "^6.0.5"
-    get-stream "^5.0.0"
-    is-stream "^2.0.0"
-    merge-stream "^2.0.0"
-    npm-run-path "^3.0.0"
-    onetime "^5.1.0"
-    p-finally "^2.0.0"
-    signal-exit "^3.0.2"
-    strip-final-newline "^2.0.0"
-
 execa@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/execa/-/execa-2.0.5.tgz#5be3e2ea7e61bd038da5a0e11dc6ab2097357f2f"
@@ -1893,22 +1863,6 @@ execa@^2.0.5:
     is-stream "^2.0.0"
     merge-stream "^2.0.0"
     npm-run-path "^3.0.0"
-    onetime "^5.1.0"
-    p-finally "^2.0.0"
-    signal-exit "^3.0.2"
-    strip-final-newline "^2.0.0"
-
-execa@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/execa/-/execa-3.2.0.tgz#18326b79c7ab7fbd6610fd900c1b9e95fa48f90a"
-  integrity sha512-kJJfVbI/lZE1PZYDI5VPxp8zXPO9rtxOkhpZ0jMKha56AI9y2gGVC6bkukStQf0ka5Rh15BA5m7cCCH4jmHqkw==
-  dependencies:
-    cross-spawn "^7.0.0"
-    get-stream "^5.0.0"
-    human-signals "^1.1.1"
-    is-stream "^2.0.0"
-    merge-stream "^2.0.0"
-    npm-run-path "^4.0.0"
     onetime "^5.1.0"
     p-finally "^2.0.0"
     signal-exit "^3.0.2"
@@ -4113,10 +4067,10 @@ progress@2.0.3, progress@^2.0.0:
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
 
-prompts@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/prompts/-/prompts-2.2.1.tgz#f901dd2a2dfee080359c0e20059b24188d75ad35"
-  integrity sha512-VObPvJiWPhpZI6C5m60XOzTfnYg/xc/an+r9VYymj9WJW3B/DIH+REzjpAACPf8brwPeP+7vz3bIim3S+AaMjw==
+prompts@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/prompts/-/prompts-2.3.0.tgz#a444e968fa4cc7e86689a74050685ac8006c4cc4"
+  integrity sha512-NfbbPPg/74fT7wk2XYQ7hAIp9zJyZp5Fu19iRbORqqy1BhtrkZ0fPafBU+7bmn8ie69DpT0R6QpJIN2oisYjJg==
   dependencies:
     kleur "^3.0.3"
     sisteransi "^1.0.3"
