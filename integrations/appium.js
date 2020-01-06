@@ -9,7 +9,7 @@ module.exports = class AppiumIntegration {
     this.print.debug('Appium integration enabled')
 
     // Define the global capability options.
-    context.webdriver.port = process.env.APPIUM_PORT
+    context.webdriver.port = 4723
   }
 
   static integrate (context) {
@@ -26,13 +26,12 @@ module.exports = class AppiumIntegration {
     testContext.capability = Object.assign(options, testContext.capability)
   }
 
-  /* Not sure yet if there is anything to add for reporting
-    async report ({ webdriver, testContext }) {
-        try {
-
-        } catch (err) {
-            this.print.error(err)
-        }
+  // Not sure yet if there is anything to add for reporting
+  async report ({ webdriver, testContext }) {
+    try {
+      // DO SOMETHING
+    } catch (err) {
+      this.print.error(err)
     }
-    */
+  }
 }
