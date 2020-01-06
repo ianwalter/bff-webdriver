@@ -92,12 +92,14 @@ module.exports = {
       print.debug('Adding WebDriver integrations')
       const BrowserStackIntegration = require('./integrations/browserstack')
       const ZaleniumIntegration = require('./integrations/zalenium')
+      const AppiumIntegration = require('./integrations/appium')
 
       // Add enabled integrations to the integrations array so they can be used
       // later.
       context.webdriver.integrations = context.webdriver.integrations || []
       BrowserStackIntegration.integrate(context)
       ZaleniumIntegration.integrate(context)
+      AppiumIntegration.integrate(context)
 
       // Go through each enabled integration and allow it to enahance the
       // webdriver capability.
