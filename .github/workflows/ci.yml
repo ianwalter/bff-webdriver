@@ -43,4 +43,4 @@ jobs:
         with:
           args: yarn test
         env:
-          SELENIUM_STANDALONE: true
+          SELENIUM_HUB_HOST: hub
