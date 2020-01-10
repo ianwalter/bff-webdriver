@@ -15,7 +15,6 @@ test('test server', async ({ browser, expect }) => {
       </html>
     `
   })
-  console.log('SERVER', server)
   await browser.url(server.url)
   expect(await browser.getTitle()).toBe('Hello World!')
 })
