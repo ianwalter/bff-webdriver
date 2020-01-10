@@ -9,7 +9,7 @@ module.exports = class AppiumIntegration {
     this.print.debug('Appium integration enabled')
 
     // Define the global capability options.
-    context.webdriver.port = 4723
+    context.webdriver.port = process.env.APPIUM_PORT
   }
 
   static integrate (context) {
