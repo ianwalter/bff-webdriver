@@ -11,7 +11,7 @@ jobs:
       image: node:12.10-slim
     services:
       hub:
-        image: elgalu/selenium:
+        image: elgalu/selenium:3.1
         ports:
           - 4444:4444
         env:
@@ -21,7 +21,7 @@ jobs:
           CHROME: false
           FIREFOX: false
       firefox:
-        image: elgalu/selenium:
+        image: elgalu/selenium:3.1
         env:
           SELENIUM_HUB_HOST: hub
           SELENIUM_HUB_PORT: 4444
