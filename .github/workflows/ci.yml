@@ -7,8 +7,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: node:12.10-slim
     services:
       hub:
         image: elgalu/selenium:3.1
@@ -33,10 +31,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1.2.0
       - name: Install
-        run: yarn
+        uses: ianwalter/selenium-standalone@master
+        with:
+          args: yarn
       - name: Lint
-        run: yarn lint
+        uses: ianwalter/selenium-standalone@master
+        with:
+          args: yarn lint
       - name: Test
-        run: yarn test
+        uses: ianwalter/selenium-standalone@master
+        with:
+          args: yarn test
         env:
           SELENIUM_STANDALONE: true
