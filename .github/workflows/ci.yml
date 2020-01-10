@@ -34,5 +34,7 @@ jobs:
         run: yarn
       - name: Lint
         run: yarn lint
+      - name: debug
+        run: curl http://hub:4444
       - name: Test
         run: yarn test
