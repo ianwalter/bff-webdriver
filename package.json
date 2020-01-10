@@ -64,12 +64,7 @@
     ],
     "webdriver": {
       "capabilities": {
-        "browserName": "firefox",
-        "bstack:options": {
-          "local": true,
-          "projectName": "bff-webdriver",
-          "timezone": "New_York"
-        }
+        "browserName": "firefox"
       }
     }
   },
