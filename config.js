@@ -7,7 +7,7 @@ module.exports = {
     if (standalone) {
       context.webdriver.standalone = standalone
     } else if (hostname) {
-      context.webdriver.hostname = 'localhost'
+      context.webdriver.hostname = hostname
     } else {
       context.webdriver.browserstack = true
       context.webdriver.capabilities['bstack:options'] = {
