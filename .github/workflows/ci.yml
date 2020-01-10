@@ -19,7 +19,7 @@ jobs:
           CHROME: false
           FIREFOX: false
         ports:
-          - 4444/4444
+          - 4444:4444
       firefox:
         image: elgalu/selenium:3.1
         env:
