@@ -7,22 +7,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: node:13.6-slim
+    env:
+      SELENIUM_HUB_HOST: hub
     services:
       hub:
         image: elgalu/selenium:3.1
-        ports:
-          - 4444:4444
         env:
-          SELENIUM_HUB_HOST: hub
-          SELENIUM_HUB_PORT: 4444
           GRID: true
           CHROME: false
           FIREFOX: false
       firefox:
         image: elgalu/selenium:3.1
         env:
-          SELENIUM_HUB_HOST: hub
-          SELENIUM_HUB_PORT: 4444
           GRID: false
           CHROME: false
           FIREFOX: true
@@ -31,16 +29,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1.2.0
       - name: Install
-        uses: ianwalter/selenium-standalone@master
-        with:
-          args: yarn
+        run: yarn
       - name: Lint
-        uses: ianwalter/selenium-standalone@master
-        with:
-          args: yarn lint
+        run: yarn lint
       - name: Test
-        uses: ianwalter/selenium-standalone@master
-        with:
-          args: yarn test
-        env:
-          SELENIUM_HUB_HOST: hub
+        run: yarn test
