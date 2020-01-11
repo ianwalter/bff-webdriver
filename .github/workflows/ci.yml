@@ -18,6 +18,7 @@ jobs:
           GRID: true
           CHROME: false
           FIREFOX: false
+          SELENIUM_HUB_PORT: 4444
       firefox:
         image: elgalu/selenium:3.1
         env:
