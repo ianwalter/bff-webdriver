@@ -15,6 +15,10 @@ test('test server', async ({ browser, expect }) => {
       </html>
     `
   })
-  await browser.url(server.url)
+  const url = new URL(server.url)
+  if (process.env.TEST_HOST) {
+    url.host = process.env.TEST_HOST
+  }
+  await browser.url(url.href)
   expect(await browser.getTitle()).toBe('Hello World!')
 })
