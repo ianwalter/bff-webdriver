@@ -13,20 +13,12 @@ jobs:
       SELENIUM_HUB_HOST: hub
     services:
       hub:
-        image: elgalu/selenium:3.1
-        env:
-          GRID: true
-          CHROME: false
-          FIREFOX: false
-          SELENIUM_HUB_PORT: 4444
+        image: selenium/hub:3.141.59-gold
       firefox:
-        image: elgalu/selenium:3.1
+        image: selenium/node-firefox:3.141.59-gold
         env:
-          GRID: false
-          CHROME: false
-          FIREFOX: true
-          VIDEO: false
-          SELENIUM_HUB_HOST: hub
+          HUB_HOST: hub
+          HUB_PORT: 4444
     steps:
       - name: Checkout
         uses: actions/checkout@v1.2.0
