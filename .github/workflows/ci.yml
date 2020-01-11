@@ -18,8 +18,6 @@ jobs:
           GRID: true
           CHROME: false
           FIREFOX: false
-        ports:
-          - 4444:4444
       firefox:
         image: elgalu/selenium:3.1
         env:
@@ -35,8 +33,6 @@ jobs:
       - name: Lint
         run: yarn lint
       - name: debug
-        run: |
-          apt-get update && apt-get install -y curl
-          curl http://hub:4444
+        run: curl http://hub:4444
       - name: Test
         run: yarn test
