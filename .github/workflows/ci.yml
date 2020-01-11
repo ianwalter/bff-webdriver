@@ -26,6 +26,7 @@ jobs:
           CHROME: false
           FIREFOX: true
           VIDEO: false
+          SELENIUM_HUB_HOST: hub
     steps:
       - name: Checkout
         uses: actions/checkout@v1.2.0
@@ -33,7 +34,5 @@ jobs:
         run: yarn
       - name: Lint
         run: yarn lint
-      - name: debug
-        run: curl http://hub:4444
       - name: Test
         run: yarn test
