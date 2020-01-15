@@ -140,9 +140,11 @@ module.exports = {
     }
 
     try {
-      // Tell Selenium to delete the browser session once the test is over.
-      print.debug('Terminating WebdriverIO browser instance')
-      await context.testContext.browser.deleteSession()
+      if (context.testContext.browser) {
+        // Tell Selenium to delete the browser session once the test is over.
+        print.debug('Terminating WebdriverIO browser instance')
+        await context.testContext.browser.deleteSession()
+      }
     } catch (err) {
       print.error(err)
     }

@@ -7,21 +7,26 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: node:13.6
+      options: --network-alias testHost
+    env:
+      SELENIUM_HUB_HOST: hub
+      TEST_HOST: testHost
+    services:
+      hub:
+        image: selenium/hub:3.141.59-gold
+      firefox:
+        image: selenium/node-firefox:3.141.59-gold
+        env:
+          HUB_HOST: hub
+          HUB_PORT: 4444
     steps:
       - name: Checkout
         uses: actions/checkout@v1.2.0
       - name: Install
-        uses: ianwalter/bsl@v2.0.1
-        with:
-          args: yarn
+        run: yarn
       - name: Lint
-        uses: ianwalter/bsl@v2.0.1
-        with:
-          args: yarn lint
+        run: yarn lint
       - name: Test
-        uses: ianwalter/bsl@v2.0.1
-        with:
-          args: yarn test
-        env:
-          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+        run: yarn test
