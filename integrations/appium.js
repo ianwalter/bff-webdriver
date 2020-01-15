@@ -26,12 +26,4 @@ module.exports = class AppiumIntegration {
     testContext.capability = Object.assign(options, testContext.capability)
   }
 
-  // Not sure yet if there is anything to add for reporting
-  async report ({ webdriver, testContext }) {
-    try {
-      // DO SOMETHING
-    } catch (err) {
-      this.print.error(err)
-    }
-  }
 }
