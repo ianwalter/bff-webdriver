@@ -25,4 +25,6 @@ module.exports = class AppiumIntegration {
     }
     testContext.capability = Object.assign(options, testContext.capability)
   }
+
+  report () {}
 }
