@@ -130,15 +130,17 @@ module.exports = {
     }
   },
   async afterEach (file, context) {
-    if (!context.webdriver.appium) {
-      try {
-        // Go through each enabled integration and report results to it, etc.
-        print.debug('Running WebDriver integration reporting')
-        const toReport = async integration => integration.report(context)
-        await Promise.all(context.webdriver.integrations.map(toReport))
-      } catch (err) {
-        print.error(err)
+    try {
+      // Go through each enabled integration and report results to it, etc.
+      print.debug('Running WebDriver integration reporting')
+      const toReport = async integration => {
+        if (integration.report) {
+          integration.report(context)
+        }
       }
+      await Promise.all(context.webdriver.integrations.map(toReport))
+    } catch (err) {
+      print.error(err)
     }
     try {
       if (context.testContext.browser) {
