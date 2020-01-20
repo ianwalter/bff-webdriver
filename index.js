@@ -130,15 +130,16 @@ module.exports = {
     }
   },
   async afterEach (file, context) {
-    try {
-      // Go through each enabled integration and report results to it, etc.
-      print.debug('Running WebDriver integration reporting')
-      const toReport = async integration => integration.report(context)
-      await Promise.all(context.webdriver.integrations.map(toReport))
-    } catch (err) {
-      print.error(err)
+    if (!context.webdriver.appium) {
+      try {
+        // Go through each enabled integration and report results to it, etc.
+        print.debug('Running WebDriver integration reporting')
+        const toReport = async integration => integration.report(context)
+        await Promise.all(context.webdriver.integrations.map(toReport))
+      } catch (err) {
+        print.error(err)
+      }
     }
-
     try {
       if (context.testContext.browser) {
         // Tell Selenium to delete the browser session once the test is over.
