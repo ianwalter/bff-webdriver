@@ -142,6 +142,7 @@ module.exports = {
     } catch (err) {
       print.error(err)
     }
+
     try {
       if (context.testContext.browser) {
         // Tell Selenium to delete the browser session once the test is over.
