@@ -24,6 +24,8 @@ module.exports = class ZaleniumIntegration {
   async report ({ webdriver, testContext }) {
     try {
       const cookie = { name: 'zaleniumTestPassed' }
+      let value = 'true'
+
       if (testContext.result.failed) {
         if (webdriver.zalenium.dashboardUrl) {
           // If the test failed, print the Zalenium Dashboard URL for this
@@ -37,11 +39,16 @@ module.exports = class ZaleniumIntegration {
           this.print.info('Zalenium session:', url)
         }
 
-        // Tell Zalenium the test failed by setting a cookie.
-        await testContext.browser.addCookie({ ...cookie, value: 'false' })
-      } else {
+        // Set the "passed" value to false.
+        value = 'false'
+      }
+
+      try {
         // Tell Zalenium the test passed by setting a cookie.
-        await testContext.browser.addCookie({ ...cookie, value: 'true' })
+        await testContext.browser.addCookie({ ...cookie, value })
+      } catch (err) {
+        // Ignore errors from setting the cookie since they are irrelevant to
+        // the test.
       }
     } catch (err) {
       this.print.error(err)
