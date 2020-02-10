@@ -65,14 +65,17 @@ module.exports = {
       // they can be run individually/in parallel.
       context.augmentTests = tests => tests.reduce(
         (acc, test) => acc.concat(capabilities.map(capability => {
-          // Modify the test name to contain the name of the browser it's being
-          // tested in.
-          let name = `${test.name} in ${capability.browserName}`
+          let name = test.name
+          if (capabilities.length > 0) {
+            // Modify the test name to contain the name of the browser it's
+            // being tested in.
+            name = `${test.name} in ${capability.browserName}`
 
-          // Modify the test name to contain the version of the browser it's
-          // being tested in, if configured.
-          if (capability.browserVersion) {
-            name += ` ${capability.browserVersion}`
+            // Modify the test name to contain the version of the browser it's
+            // being tested in, if configured.
+            if (capability.browserVersion) {
+              name += ` ${capability.browserVersion}`
+            }
           }
 
           // Return the test with it's modified name and capability
