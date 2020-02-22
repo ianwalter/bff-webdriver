@@ -375,10 +375,10 @@
     marked-terminal "^4.0.0"
     strip-ansi "^6.0.0"
 
-"@ianwalter/print@^5.1.0":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@ianwalter/print/-/print-5.1.0.tgz#52c5b727a24088ae3354f34c8147761053bc907f"
-  integrity sha512-hthgIc5l98Az6TS1m2SzAzjWtVwrAdBBJvW8uhtvq+awekelri5s4yoKNLkZAjHRJSM7gyXX+IK/ttISzkiOUA==
+"@ianwalter/print@^5.2.1":
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/@ianwalter/print/-/print-5.2.1.tgz#c45eee0cc9eae1a03dcef5fcdcad2bea74614bd8"
+  integrity sha512-kbdwljHZKZXcDmlDV9XpCVLtc/gNAFID3jGSPExfwcX3CQaFqcdHvZ2otm1Zsen0ES9ybt4SJXoOddc/zyVXUg==
   dependencies:
     "@ianwalter/chromafi" "^1.0.1"
     "@ianwalter/clone" "^5.0.0"
