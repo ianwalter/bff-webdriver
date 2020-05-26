@@ -3683,10 +3683,10 @@ p-series@^2.1.0:
     "@sindresorhus/is" "^0.15.0"
     p-reduce "^2.1.0"
 
-p-settle@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/p-settle/-/p-settle-4.0.1.tgz#1179f77eb574c73f8e545a7d840fd167762af1fe"
-  integrity sha512-/9fOVH7ipE/TSaxHLZ95XklVLaX2rlOcocE17N/YARHaFbdKwf0jDnIVW22MVQ8sn3AjuJ0XIwylg6GZ3Lhg6Q==
+p-settle@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/p-settle/-/p-settle-4.1.0.tgz#ae459f812de9599e68ba72d815d1c22376e61e3d"
+  integrity sha512-4SdSDDOsf9QEigsscXuddUBv2V8H+a823JGndXpoDeosL1Ah1da8YSGMF5EZcfih6toY1+kFdmKQ87+bGVmwqQ==
   dependencies:
     p-limit "^2.2.2"
     p-reflect "^2.1.0"
