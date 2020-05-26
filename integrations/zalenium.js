@@ -23,32 +23,16 @@ module.exports = class ZaleniumIntegration {
 
   async report ({ webdriver, testContext }) {
     try {
-      const cookie = { name: 'zaleniumTestPassed' }
-      let value = 'true'
-
-      if (testContext.result.failed) {
-        if (webdriver.zalenium.dashboardUrl) {
-          // If the test failed, print the Zalenium Dashboard URL for this
-          // session to make it easier for the user to debug.
-          const { oneLine } = require('common-tags')
-          const query = oneLine`
-            ${testContext.capability['zal:name']}
-            ${testContext.capability['zal:build']}
-          `
-          const url = `${webdriver.zalenium.dashboardUrl}?q=${encodeURI(query)}`
-          this.print.info('Zalenium session:', url)
-        }
-
-        // Set the "passed" value to false.
-        value = 'false'
-      }
-
-      try {
-        // Tell Zalenium the test passed by setting a cookie.
-        await testContext.browser.addCookie({ ...cookie, value })
-      } catch (err) {
-        // Ignore errors from setting the cookie since they are irrelevant to
-        // the test.
+      if (testContext.result.failed && webdriver.zalenium.dashboardUrl) {
+        // If the test failed, print the Zalenium Dashboard URL for this
+        // session to make it easier for the user to debug.
+        const { oneLine } = require('common-tags')
+        const query = oneLine`
+          ${testContext.capability['zal:name']}
+          ${testContext.capability['zal:build']}
+        `
+        const url = `${webdriver.zalenium.dashboardUrl}?q=${encodeURI(query)}`
+        this.print.info('Zalenium session:', url)
       }
     } catch (err) {
       this.print.error(err)
