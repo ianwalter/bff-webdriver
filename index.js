@@ -93,9 +93,9 @@ module.exports = {
 
     try {
       print.debug('Adding WebDriver integrations')
-      const BrowserStackIntegration = require('./integrations/browserstack')
-      const ZaleniumIntegration = require('./integrations/zalenium')
-      const AppiumIntegration = require('./integrations/appium')
+      const BrowserStackIntegration = require('./lib/integrations/browserstack')
+      const ZaleniumIntegration = require('./lib/integrations/zalenium')
+      const AppiumIntegration = require('./lib/integrations/appium')
 
       // Add enabled integrations to the integrations array so they can be used
       // later.
@@ -176,7 +176,7 @@ module.exports = {
     // Run cleanup in case there are any orphaned processes hanging around.
     if (context.hasFastFailure) {
       print.debug('Running cleanup')
-      const cleanup = require('./cleanup')
+      const cleanup = require('./lib/cleanup')
       await cleanup()
     }
   }

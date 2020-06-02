@@ -59,7 +59,7 @@
   "bff": {
     "logLevel": "debug",
     "plugins": [
-      "config",
+      "tests/config",
       "index"
     ],
     "webdriver": {

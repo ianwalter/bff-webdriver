@@ -31,7 +31,7 @@ async function run () {
         })
       })
     } else if (command === 'cleanup') {
-      const cleanup = require('./cleanup')
+      const cleanup = require('./lib/cleanup')
       await cleanup()
     } else {
       print.error('Unknown command:', command)
