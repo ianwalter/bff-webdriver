@@ -113,11 +113,11 @@ module.exports = {
     }
 
     try {
-      print.debug('Creating WebdriverIO browser instance')
+      print.debug('Creating WebDriver browser instance')
 
       // Set up the browser instance and add it to the test context.
-      const { remote } = require('webdriverio')
-      context.testContext.browser = await remote({
+      const { default: WebDriver } = require('webdriver')
+      context.testContext.browser = await WebDriver.newSession({
         path: '/wd/hub',
         ...context.webdriver,
         logLevel: context.webdriver.logLevel || context.logLevel,
@@ -150,7 +150,7 @@ module.exports = {
     try {
       if (context.testContext.browser) {
         // Tell Selenium to delete the browser session once the test is over.
-        print.debug('Terminating WebdriverIO browser instance')
+        print.debug('Terminating WebDriver browser instance')
         await context.testContext.browser.deleteSession()
       }
     } catch (err) {

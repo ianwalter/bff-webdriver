@@ -19,6 +19,6 @@ test('test server', async ({ browser, expect }) => {
   if (process.env.TEST_HOST) {
     url.host = process.env.TEST_HOST
   }
-  await browser.url(url.href)
+  await browser.navigateTo(url.href)
   expect(await browser.getTitle()).toBe('Hello World!')
 })
