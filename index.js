@@ -124,6 +124,9 @@ module.exports = {
         capabilities: context.testContext.capability
       })
 
+      const enhanceBrowser = require('./lib/enhanceBrowser')
+      enhanceBrowser({ shortTimeout: 300, longTimeout: 5000 }, context.testContext.browser)
+
       // Add the expect instance to the browser instance so that the user can
       // more easily create commands that involve making assertions.
       context.testContext.browser.expect = (...args) => (
