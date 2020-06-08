@@ -1,7 +1,7 @@
 const { test } = require('@ianwalter/bff')
 const { createKoaServer } = require('@ianwalter/test-server')
 
-test('test server', async ({ browser, expect }) => {
+test('test server', async t => {
   const server = await createKoaServer()
   server.use(ctx => {
     ctx.body = `
@@ -15,10 +15,11 @@ test('test server', async ({ browser, expect }) => {
       </html>
     `
   })
+  t.print.info('Server URL', server.url)
   const url = new URL(server.url)
   if (process.env.TEST_HOST) {
     url.host = process.env.TEST_HOST
   }
-  await browser.url(url.href)
-  expect(await browser.getTitle()).toBe('Hello World!')
+  await t.browser.url(url.href)
+  t.expect(await t.browser.getTitle()).toBe('Hello World!')
 })
