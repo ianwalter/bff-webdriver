@@ -47,7 +47,7 @@
     "got": "^10.6.0",
     "p-settle": "^4.1.1",
     "selenium-standalone": "^6.17.0",
-    "webdriverio": "^5.23.0"
+    "webdriverio": "^6.1.17"
   },
   "devDependencies": {
     "@ianwalter/bff": "^9.9.0",

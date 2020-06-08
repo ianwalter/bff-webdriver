@@ -66,7 +66,7 @@ module.exports = {
       context.augmentTests = tests => tests.reduce(
         (acc, test) => acc.concat(capabilities.map(capability => {
           let name = test.name
-          if (capabilities.length > 0) {
+          if (capabilities.length > 1) {
             // Modify the test name to contain the name of the browser it's
             // being tested in.
             name = `${test.name} in ${capability.browserName}`
@@ -118,6 +118,7 @@ module.exports = {
       // Set up the browser instance and add it to the test context.
       const { remote } = require('webdriverio')
       context.testContext.browser = await remote({
+        path: '/wd/hub',
         ...context.webdriver,
         logLevel: context.webdriver.logLevel || context.logLevel,
         capabilities: context.testContext.capability
