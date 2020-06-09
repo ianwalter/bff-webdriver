@@ -1,5 +1,6 @@
 const { test } = require('@ianwalter/bff')
 const { createApp } = require('@ianwalter/nrg')
+const createUrl = require('@ianwalter/url')
 
 test('test server', async t => {
   const app = createApp({ log: false })
@@ -17,11 +18,11 @@ test('test server', async t => {
   })
   const { server } = await app.start()
 
-  const url = new URL(server.url)
+  const url = createUrl(server.url)
   if (process.env.TEST_HOST) {
     url.host = process.env.TEST_HOST
   }
-  t.print.info('Server URL', url)
+  t.print.info('Server URL', url.href)
 
   try {
     await t.browser.url(url.href)
