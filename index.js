@@ -12,7 +12,7 @@ const shouldUseBsl = ({ browserstackLocal, capabilities: cap }) =>
 module.exports = {
   webdriverVersion,
   async before (context) {
-    print = new Print({ level: context.logLevel })
+    print = new Print({ level: context.log.level })
     try {
       // Set the WebDriver version if not already configured.
       context.webdriver.version = context.webdriver.version || webdriverVersion
