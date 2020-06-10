@@ -12,7 +12,7 @@ const shouldUseBsl = ({ browserstackLocal, capabilities: cap }) =>
 module.exports = {
   webdriverVersion,
   async before (context) {
-    print = new Print({ level: context.log.level })
+    print = new Print(context.log)
     try {
       // Set the WebDriver version if not already configured.
       context.webdriver.version = context.webdriver.version || webdriverVersion
@@ -54,7 +54,7 @@ module.exports = {
     }
   },
   registration (file, context) {
-    print = new Print({ level: context.logLevel })
+    print = new Print(context.log)
     try {
       // Extract the WebDriver capabilities from the test configuration.
       const capabilities = Array.isArray(context.webdriver.capabilities)
@@ -89,7 +89,7 @@ module.exports = {
     }
   },
   async beforeEach (file, context) {
-    print = new Print({ level: context.logLevel })
+    print = new Print(context.log)
 
     try {
       print.debug('Adding WebDriver integrations')
@@ -120,7 +120,7 @@ module.exports = {
       context.testContext.browser = await remote({
         path: '/wd/hub',
         ...context.webdriver,
-        logLevel: context.webdriver.logLevel || context.logLevel,
+        logLevel: context.webdriver.logLevel || context.log.level,
         capabilities: context.testContext.capability
       })
 

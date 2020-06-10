@@ -58,7 +58,9 @@
     "@ianwalter/url": "^2.0.0"
   },
   "bff": {
-    "logLevel": "debug",
+    "log": {
+      "level": "debug"
+    },
     "plugins": [
       "config",
       "index"

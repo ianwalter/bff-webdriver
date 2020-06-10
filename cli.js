@@ -8,13 +8,14 @@ async function run () {
   const config = cli({
     name: 'bff',
     options: {
-      logLevel: {
+      log: {
         alias: 'l',
-        default: 'info'
+        description: "Specifies bff-webdriver's print (logging) configuration",
+        default: { level: 'info' }
       }
     }
   })
-  const print = new Print({ level: config.logLevel })
+  const print = new Print(config.log)
   const { _: [command] } = config
 
   try {

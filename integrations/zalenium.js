@@ -3,7 +3,7 @@ const { Print } = require('@ianwalter/print')
 module.exports = class ZaleniumIntegration {
   constructor (context) {
     // Set up a print instance on the integration instance so it can be reused.
-    this.print = new Print({ level: context.logLevel })
+    this.print = new Print(context.log)
     this.print.debug('Zalenium integration enabled')
   }
 
