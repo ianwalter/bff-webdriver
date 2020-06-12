@@ -161,23 +161,26 @@ module.exports = {
     try {
       if (seleniumStandalone) {
         // Kill the Selenium Standalone child process.
-        print.debug('Stopping Selenium Standalone')
+        print.write('\n')
+        print.log('👉', 'bff-webdriver: Stopping Selenium Standalone')
         seleniumStandalone.kill()
+
+        // Run cleanup in case there are any orphaned processes hanging around.
+        if (context.err) {
+          print.write('\n')
+          print.log('👉', 'bff-webdriver: Running manual cleanup')
+          const cleanup = require('./cleanup')
+          await cleanup()
+        }
       } else if (shouldUseBsl(context.webdriver)) {
         // Stop the BrowserStack Local tunnel.
-        print.debug('Stopping BrowserStack Local')
+        print.write('\n')
+        print.log('👉', 'bff-webdriver: Stopping BrowserStack Local')
         const { stop } = require('@ianwalter/bsl')
         await stop()
       }
     } catch (err) {
       print.error(err)
-    }
-
-    // Run cleanup in case there are any orphaned processes hanging around.
-    if (context.hasFastFailure) {
-      print.debug('Running cleanup')
-      const cleanup = require('./cleanup')
-      await cleanup()
     }
   }
 }
