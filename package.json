@@ -54,7 +54,7 @@
     "@ianwalter/eslint-config": "^5.4.0",
     "@ianwalter/nrg": "^0.0.87",
     "@ianwalter/release": "^5.0.2",
-    "@ianwalter/renovate-config": "^1.4.0",
+    "@ianwalter/renovate-config": "^1.4.1",
     "@ianwalter/url": "^2.0.0"
   },
   "bff": {
