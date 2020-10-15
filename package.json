@@ -52,7 +52,7 @@
   "devDependencies": {
     "@ianwalter/bff": "^9.9.1",
     "@ianwalter/eslint-config": "^5.4.0",
-    "@ianwalter/nrg": "^0.0.87",
+    "@ianwalter/nrg": "^0.13.0",
     "@ianwalter/release": "^5.0.2",
     "@ianwalter/renovate-config": "^1.4.1",
     "@ianwalter/url": "^2.0.0"
