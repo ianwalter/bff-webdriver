@@ -50,7 +50,7 @@
     "webdriverio": "^6.1.25"
   },
   "devDependencies": {
-    "@ianwalter/bff": "^9.9.1",
+    "@ianwalter/bff": "^9.11.0",
     "@ianwalter/eslint-config": "^5.4.0",
     "@ianwalter/nrg": "^0.0.87",
     "@ianwalter/release": "^5.0.2",
